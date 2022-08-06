@@ -64,6 +64,11 @@ class Blogs(models.Model):
     posted_date=models.DateTimeField(auto_now_add=True,null=True)
     Liked_by=models.ManyToManyField(User)
 
+    @property
+    def get_comment_count(self):
+        comment_count=self.comments_set.all().count()
+        return comment_count
+
     def __str__(self):
         return self.title
 
@@ -84,6 +89,8 @@ class Comments(models.Model):
     blog=models.ForeignKey(Blogs,on_delete=models.CASCADE)
     comment=models.CharField(max_length=160)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
+
+
 
 
 #fetching all comments on a blog

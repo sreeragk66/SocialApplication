@@ -150,11 +150,11 @@ def add_comment(request,*args,**kwargs):
 @signin_required
 def delete_comment(request,*args,**kwargs):
     blog_id = kwargs.get('post_id')
-    comment_data=kwargs.get('comment_data')
+    comment_data=kwargs.get('comment_id')
     blog=Blogs.objects.get(id=blog_id)
     all_comments=blog.comments_set.all()
     for comment in all_comments:
-        if comment.user == request.user and comment.comment == comment_data :
+        if comment.user == request.user and comment.id ==comment_data:
             comment.delete()
             messages.error(request,"Comment deleted")
     return redirect("home")
@@ -239,6 +239,19 @@ class UpdateBlogView(UpdateView):
         messages.success(self.request,"Post has been Updated")
         self.object=form.save()
         return super().form_valid(form)
+
+class UpdateCommentView(UpdateView):
+    model=Comments
+    form_class=CommentForm
+    template_name="edit-comment.html"
+    success_url = reverse_lazy("home")
+    pk_url_kwarg = "comment_id"
+
+
+    # def form_valid(self, form):
+    #     messages.success(self.request,"Comment Updated")
+    #     self.object=form.save()
+    #     return super().form_valid(form)
 
 
 

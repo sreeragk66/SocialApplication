@@ -197,11 +197,16 @@
                                     <img class="img-xs rounded-circle" src="{{request.user.users.profile_pic.url}}" alt="">
                                     <div class="ml-2">
                                         <p>{{request.user}}</p>
-                                        <p class="tx-11 text-muted">Share what's on your mind</p>
+                                        <p class="tx-11 text-muted">Share what's on your mind
+                                              <a class="btn btn-primary ml-4" data-toggle="collapse" href="#collapseblogform" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <i class="fa-solid fa-share-from-square fa-lg"></i>
+                                              </a>
+                                        </p>
+
                                     </div>
                                 </div>
                                 <div class="dropdown">
-                                    <button class="btn p-0" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn p-0 " type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg pb-3px">
                                             <circle cx="12" cy="12" r="1"></circle>
                                             <circle cx="19" cy="12" r="1"></circle>
@@ -237,17 +242,23 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="mb-3 tx-14">
-                                <form method="post" enctype="multipart/form-data">
-                                    {%csrf_token%}
-                                    {{form.as_p}}
-                                    <input type="submit" value="Post" class="btn btn-block btn-primary">
-                                </form>
-                            </p>
 
                         </div>
+                        <div class="collapse" id="collapseblogform">
+                          <div class="card card-body">
+                              <div class="card-body">
+                                <p class="mb-3 tx-14">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {%csrf_token%}
+                                        {{form.as_p}}
+                                        <input type="submit" value="Post" class="btn btn-block btn-primary">
+                                    </form>
+                                </p>
+
+                              </div>
+                          </div>
+                        </div>
+
                         <div class="card-footer">
                             <div class="d-flex post-actions">
 
@@ -281,32 +292,16 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                                         {%if blog.author == request.user%}
                                         <a class="dropdown-item d-flex align-items-center" href="{%url 'update-post' blog.id%}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-meh icon-sm mr-2">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="8" y1="15" x2="16" y2="15"></line>
-                                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                                            </svg> <span class="">Edit Post</span></a>
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                           <span class="">Edit Post</span></a>
 
                                         <a class="dropdown-item d-flex align-items-center" href="{%url 'delete-post' blog.id%}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-right-up icon-sm mr-2">
-                                                <polyline points="10 9 15 4 20 9"></polyline>
-                                                <path d="M4 20h7a4 4 0 0 0 4-4V4"></path>
-                                            </svg> <span class="">Delete Post</span></a>
+                                            <i class="fa-regular fa-trash-can"></i>
+                                         <span class="">Delete Post</span></a>
                                         {%endif%}
                                         <a class="dropdown-item d-flex align-items-center" href="">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2 icon-sm mr-2">
-                                                <circle cx="18" cy="5" r="3"></circle>
-                                                <circle cx="6" cy="12" r="3"></circle>
-                                                <circle cx="18" cy="19" r="3"></circle>
-                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                            </svg> <span class="">View Profile</span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy icon-sm mr-2">
-                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                            </svg> <span class=""></span></a>
+                                            <i class="fa-regular fa-eye"></i>
+                                         <span class="">View Profile</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -321,82 +316,90 @@
                                 <p>
                                     <!--code for like ,dislike and displaying like count-->
                                     {%if request.user in blog.Liked_by.all%}
-                                  <a href="{%url 'dislike' blog.id%}"><button class="btn btn-secondary"><i class="fa-solid fa-thumbs-down"></i>&nbsp;dislike</button></a>
-                                    {{blog.get_like_count}}
-                                             Likes
-                                            {%for user in blog.get_liked_users%}
-                                                {{user}},
-                                            {%endfor%}
+                                    <p>
+                                      <a href="{%url 'dislike' blog.id%}" class="align-items-center  mr-1"><i class="fa-solid fa-thumbs-up fa-lg"></i><span> {{blog.get_like_count}}</span></a>
+                                      <a class="align-items-center text-muted" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in blog.get_liked_users%}{{user}},{%endfor%}">likes</a>
+                                    </p>
+
                                     {%else%}
-                                       <a href="{%url 'add-like' blog.id%}"><button class="btn btn-secondary"><i class="fa-solid fa-thumbs-up"></i>&nbsp;like</button></a>
-                                    {{blog.get_like_count}}
-                                             Likes
-                                            {%for user in blog.get_liked_users%}
-                                            {{user}},
-                                            {%endfor%}
+                                    <p>
+                                       <a href="{%url 'add-like' blog.id%}" class="align-items-center text-muted mr-1"><i class="fa-regular fa-thumbs-up fa-lg"></i> <span>{{blog.get_like_count}}</span></a>
+                                       <a class="align-items-center text-muted" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in blog.get_liked_users%}{{user}},{%endfor%}">likes</a>
 
-
+                                     </p>
                                     {%endif%}
                                 </p>
-<!--                                <a href="javascript:;" class="d-flex align-items-center text-muted mr-4">-->
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart icon-md">-->
-<!--                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>-->
-<!--                                    </svg>-->
-<!--                                    <p class="d-none d-md-block ml-2">Like</p>-->
-<!--                                </a>-->
-<!--                                <a href="javascript:;" class="d-flex align-items-center text-muted mr-4">-->
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon-md">-->
-<!--                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>-->
-<!--                                    </svg>-->
-<!--                                    <p class="d-none d-md-block ml-2">Comment</p>-->
-<!--                                </a>-->
-<!--                                <a href="javascript:;" class="d-flex align-items-center text-muted">-->
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share icon-md">-->
-<!--                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>-->
-<!--                                        <polyline points="16 6 12 2 8 6"></polyline>-->
-<!--                                        <line x1="12" y1="2" x2="12" y2="15"></line>-->
-<!--                                    </svg>-->
-<!--                                    <p class="d-none d-md-block ml-2">Share</p>-->
-<!--                                </a>-->
+
+                                <a class="d-flex align-items-center text-muted mr-4 ml-4" data-toggle="collapse" href="#collapseExample{{blog.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+
+                                    <p class="d-none d-md-block ml-2"><i class="fa-regular fa-comments fa-lg"></i> {{blog.get_comment_count}} Comments</p>
+                                </a>
                             </div>
                         </div>
-                        {%for comment in blog.comments_set.all%}
-                        <div class="coment-area">
-                        <ul class="we-comet">
-                            <li>
-                                <div class="comet-avatar">
-                                    <img src="{{comment.user.users.profile_pic.url}}" style="height:50px;width:50px" alt="">
+
+                        <div class="collapse" id="collapseExample{{blog.id}}">
+                          <div class="card card-body">
+                              {%for comment in blog.comments_set.all%}
+                                <div class="coment-area">
+                                <ul class="we-comet">
+                                    <li>
+                                        <div class="comet-avatar">
+                                            <img src="{{comment.user.users.profile_pic.url}}" style="height:50px;width:50px" alt="">
+                                        </div>
+                                        <div class="we-comment">
+                                            <div class="coment-head">
+                                                <h5><a href="time-line.html" title="">{{comment.user}}</a></h5>
+
+        <!--                                        code to delete comment-->
+
+                                                <span>{%if comment.user == request.user%}
+                                                        <div class="dropdown">
+                                                            <button class="btn p-0" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg pb-3px">
+                                                                    <circle cx="12" cy="12" r="1"></circle>
+                                                                    <circle cx="19" cy="12" r="1"></circle>
+                                                                    <circle cx="5" cy="12" r="1"></circle>
+                                                                </svg>
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                                                                <a class="dropdown-item d-flex align-items-center" href="{%url 'update-comment' comment.id%}">
+                                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                                   <span class="">Edit Comment</span></a>
+
+                                                                <a class="dropdown-item d-flex align-items-center" href="{%url 'delete-comment' blog.id comment.id%}">
+                                                                    <i class="fa-regular fa-trash-can"></i>
+                                                                 <span class="">Delete Comment</span></a>
+                                                            </div>
+                                                        </div>
+                                                        {%endif%}
+                                                </span>
+                                                <a class="we-reply" href="#" title="Reply"></a>
+                                            </div>
+                                            <p>{{comment.comment}}</p>
+
+                                        </div>
+                                    </li>
+                                </ul>
                                 </div>
-                                <div class="we-comment">
-                                    <div class="coment-head">
-                                        <h5><a href="time-line.html" title="">{{comment.user}}</a></h5>
+                              {%endfor%}
+                              <div class="container rounded mb-3">
+                                    <form action="{%url 'add-comment' blog.id%}" method="post">
+                                        {%csrf_token%}
+        <!--                code for comment form-->
+                                        <p>
+                                           <input type="text" name="comment" class="form-control" maxlength="160" required="" id="id_comment" placeholder="Type your comment here...">
+                                        </p>
+                                        <p>
+                                            <input type="submit" value="Comment" class="btn btn-block btn-primary">
+                                        </p>
 
-<!--                                        code to delete comment-->
-
-                                        <span>{%if comment.user == request.user%}
-                                                 <a href="{%url 'delete-comment' blog.id comment.comment%}"><i class="fa-solid fa-trash"></i></a>
-                                                {%endif%}
-                                        </span>
-                                        <a class="we-reply" href="#" title="Reply"></a>
-                                    </div>
-                                    <p>{{comment.comment}}</p>
-
-                                </div>
-                            </li>
-                        </ul>
+                                    </form>
+                            </div>
+                          </div>
                         </div>
-                        {%endfor%}
+
                         <!--                End of comment displaying loop-->
-                        <div class="container rounded">
-                            <form action="{%url 'add-comment' blog.id%}" method="post">
-                                {%csrf_token%}
-<!--                code for comment form-->
-                                {{comment_form.as_p}}
-                            <input type="submit" value="Add Comment" class="btn btn-block btn-primary">
-                            </form>
-                        </div>
                     </div>
-
                     {%endif%}
                     <!--             End of blog post displaying loop-->
                     {%endfor%}
@@ -486,7 +489,7 @@
                                             <line x1="20" y1="8" x2="20" y2="14"></line>
                                             <line x1="23" y1="11" x2="17" y2="11"></line>
                                         </svg>
-                                        <a class="text-white" href="{%url 'follow' user.id%}">follow</a>
+                                        <a class="text-white" href="{%url 'follow' user.id%}">Follow</a>
                                     </button>
                                 </div>
                                 {%endfor%}
@@ -513,7 +516,7 @@
                                     </div>
                                     <button class="btn btn-icon btn-secondary">
 
-                                        <a class="text-white" href="{%url 'unfollow' user.id%}">unfollow</a>
+                                        <a class="text-white" href="{%url 'unfollow' user.id%}">Unfollow</a>
                                     </button>
                                 </div>
                             {%endfor%}
@@ -897,6 +900,15 @@ li.post-comment .comet-avatar {
     right: 0;
     background: none;
 }
+
+a{
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
 
 </style>
