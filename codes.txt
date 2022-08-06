@@ -1,0 +1,39 @@
+code for pro pic of blog author
+---------------------------------
+
+{{blog.author.users.profile_pic.url}}
+
+code for user profile pic in suggestions
+--------------------------------------------
+
+{{userprofile.profile_pic.url}}
+
+
+
+change sample value to 4 once 4 users are added
+
+follow -->
+url userprofile.id
+
+
+
+%for userprofile in request.user.users.get_invitations%}
+   
+      {%endfor%}
+
+
+sampling
+------------
+return random.sample(invitations,1)
+
+follow 
+------------
+
+{%for user in request.user.users.get_invitations%}
+
+image - {{user.users.profiele_pic.url}}
+
+{{user.username}} -- name
+
+
+

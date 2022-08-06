@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="row mt-lg-5">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <p>
+                {%if form.errors%}
+                    <div class="alert alert-danger" role="alert">
+                            {{form.errors}}
+                    </div>
+                 {%endif%}
+        </p>
+      <form action="" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
+          {{form.as_p}}
+
+
+
+
+       <button type="submit" class="btn btn-primary">Update Profile</button>
+
+
+      </form>
+    </div>
+    <div class="col-4"></div>
+</div>
+{%endblock%}
