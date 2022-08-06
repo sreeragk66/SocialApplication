@@ -227,7 +227,18 @@ def unfollow(request,*args,**kwargs):
     messages.success(request,"You have unfollowed  "+friend_profile.username)
     return redirect("home")
 
+@method_decorator(signin_required,name="dispatch")
+class UpdateBlogView(UpdateView):
+    model=Blogs
+    form_class=BlogForm
+    template_name="edit-post.html"
+    success_url = reverse_lazy("home")
+    pk_url_kwarg ="post_id"
 
+    def form_valid(self, form):
+        messages.success(self.request,"Post has been Updated")
+        self.object=form.save()
+        return super().form_valid(form)
 
 
 

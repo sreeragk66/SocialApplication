@@ -71,3 +71,4 @@ class ProfilePicUpdateForm(ModelForm):
         widgets={
             "profile_pic":forms.FileInput(attrs={"class":"form-control"})
     }
+
