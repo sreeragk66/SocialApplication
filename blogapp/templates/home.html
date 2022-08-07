@@ -1,15 +1,24 @@
 {%extends 'base.html'%}
 {%block body_block%}
+{%load static%}
 <div class="container">
 <div class="profile-page tx-13">
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="profile-header">
                 <div class="cover">
-                    <div class="gray-shade" ></div>
+                    <div class="gray-shade"></div>
+                    {%if request.user.users.cover_pic%}
                     <figure>
-                        <img src="https://bootdey.com/img/Content/bg1.jpg" class="img-fluid" alt="profile cover">
+                            <img src="{{request.user.users.cover_pic.url}}"  class="img-fluid" alt="profile cover" >
                     </figure>
+                    {%else%}
+                    <figure>
+                        <img src="{%static 'images/default_cover.jpg'%}"  class="img-fluid" alt="profile cover" >
+
+
+                    </figure>
+                    {%endif%}
                     <div class="cover-body d-flex justify-content-between align-items-center">
                         <div>
                             {%if request.user.users.profile_pic%}
@@ -30,7 +39,7 @@
 
                                 </button>
                             </div>
-                            {%else%}
+                        {%else%}
                             <div class="d-none d-md-block">
                                 <button class="btn btn-primary btn-icon-text btn-edit-profile">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit btn-icon-prepend">
@@ -108,7 +117,7 @@
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
                                         <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                    </svg> <span class="">Edit</span></a>
+                                    </svg> <span class="">Update Cover</span></a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch icon-sm mr-2">
                                         <line x1="6" y1="3" x2="6" y2="15"></line>

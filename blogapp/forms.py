@@ -30,6 +30,7 @@ class UserProfileForm(ModelForm):
             "bio":forms.TextInput(attrs={"class":"form-control"}),
             "phone":forms.TextInput(attrs={"class":"form-control"}),
             "profile_pic": forms.FileInput(attrs={"class": "form-control"}),
+            "cover_pic": forms.FileInput(attrs={"class": "form-control"}),
             "gender":forms.Select(attrs={"class":"form-control"}),
 
         }
@@ -72,3 +73,5 @@ class ProfilePicUpdateForm(ModelForm):
             "profile_pic":forms.FileInput(attrs={"class":"form-control"})
     }
 
+class DeleteProfileForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Enter password to confirm"}))

@@ -18,7 +18,8 @@ urlpatterns=[
     path("users/unfollow/<int:user_id>",views.unfollow,name="unfollow"),
     path("post/remove/<int:post_id>",views.delete_post,name="delete-post"),
     path("post/update/<int:post_id>",views.UpdateBlogView.as_view(),name="update-post"),
-    path("post/comment/update/<int:comment_id>", views.UpdateCommentView.as_view(), name="update-comment")
+    path("post/comment/update/<int:comment_id>", views.UpdateCommentView.as_view(), name="update-comment"),
+    path("accounts/remove/<int:user_id>", views.DeleteProfileView.as_view(), name="delete-profile"),
 
 
 

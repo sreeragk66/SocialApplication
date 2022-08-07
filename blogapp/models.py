@@ -9,6 +9,7 @@ import random
 class UserProfile(models.Model):
     Phone_regex=RegexValidator(r'[0-9]{10}')
     profile_pic=models.ImageField(upload_to="profilepics",null=True)
+    cover_pic=models.ImageField(upload_to="coverpics",null=True)
     bio=models.CharField(max_length=120)
     phone=models.CharField(max_length=10,validators=[Phone_regex])
     date_of_birth=models.DateField(null=True)

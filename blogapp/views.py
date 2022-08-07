@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic import View,CreateView,FormView,TemplateView,UpdateView
+from django.views.generic import View,CreateView,FormView,TemplateView,UpdateView,DeleteView
 from django.contrib.auth.models import User
 from blogapp.models import UserProfile,Blogs,Comments
-from blogapp.forms import UserRegistrationForm,LoginForm,UserProfileForm,PasswordResetForm,BlogForm,CommentForm,ProfilePicUpdateForm
+from blogapp.forms import UserRegistrationForm,LoginForm,UserProfileForm,PasswordResetForm,BlogForm,CommentForm,ProfilePicUpdateForm,DeleteProfileForm
 from django.contrib.auth import login,logout,authenticate
 from django.utils.decorators import method_decorator
 
@@ -240,6 +240,7 @@ class UpdateBlogView(UpdateView):
         self.object=form.save()
         return super().form_valid(form)
 
+@method_decorator(signin_required,name="dispatch")
 class UpdateCommentView(UpdateView):
     model=Comments
     form_class=CommentForm
@@ -248,10 +249,47 @@ class UpdateCommentView(UpdateView):
     pk_url_kwarg = "comment_id"
 
 
+    def form_valid(self, form):
+        messages.success(self.request,"Comment Updated")
+        self.object=form.save()
+        return super().form_valid(form)
+
+
+@method_decorator(signin_required,name="dispatch")
+class DeleteProfileView(DeleteView):
+    model=User
+    form_class=DeleteProfileForm
+    template_name = "delete-account.html"
+    success_url = reverse_lazy("signup")
+    pk_url_kwarg = "user_id"
+
+    def post(self,request,*args,**kwargs):
+        form=self.form_class(request.POST)
+        qs = User.objects.get(id=request.user.id)
+        user_id=kwargs.get("user_id")
+        if user_id == request.user.id:
+            if form.is_valid():
+                password=form.cleaned_data.get("password")
+                user=authenticate(username=request.user,password=password)
+                if user:
+                    qs.delete()
+                    messages.error(self.request, "Your account has been deleted ! Please signup")
+                    return redirect("signup")
+                else:
+                    messages.error(self.request, "Password is Incorrect !")
+                    return render(request,self.template_name,{"form":form})
+        else:
+            messages.error(request,"Access denied, Cannot delete other users' account")
+            return render(request,self.template_name,{"form":form})
+
+
     # def form_valid(self, form):
-    #     messages.success(self.request,"Comment Updated")
-    #     self.object=form.save()
-    #     return super().form_valid(form)
+    #     success_url = self.get_success_url()
+    #     self.object.delete()
+    #     messages.error(self.request,"Profile has been deleted !,Please signup to create a new account")
+    #     return redirect(success_url)
+
+
 
 
 

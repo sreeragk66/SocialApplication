@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-4"></div>
+        <div class="col-4 mt-3">
+            <form action=""method="post">
+                {%csrf_token%}
+                <p><strong style="text-transform:capitalize;">{{request.user}}</strong>, Are you sure you want to delete your account ?<br>
+                    Please note that this action can't be reverted
+                </p>
+                <input type="password" name="password" class="form-control mb-3" placeholder="Enter password to confirm" required="" id="id_password">
+                   <button class="btn btn-danger" type="submit">Confirm</button>
+            </form>
+
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+{%endblock%}
