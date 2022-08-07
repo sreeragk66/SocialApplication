@@ -75,3 +75,14 @@ class ProfilePicUpdateForm(ModelForm):
 
 class DeleteProfileForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Enter password to confirm"}))
+
+
+class CoverPicUpdateForm(ModelForm):
+    class Meta:
+        model=UserProfile
+        fields=[
+            "cover_pic"
+        ]
+        widgets={
+            "cover_pic":forms.FileInput(attrs={"class":"form-control"})
+    }

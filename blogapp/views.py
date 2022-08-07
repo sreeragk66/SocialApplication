@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View,CreateView,FormView,TemplateView,UpdateView,DeleteView
 from django.contrib.auth.models import User
 from blogapp.models import UserProfile,Blogs,Comments
-from blogapp.forms import UserRegistrationForm,LoginForm,UserProfileForm,PasswordResetForm,BlogForm,CommentForm,ProfilePicUpdateForm,DeleteProfileForm
+from blogapp.forms import UserRegistrationForm,LoginForm,UserProfileForm,PasswordResetForm,BlogForm,CommentForm,ProfilePicUpdateForm,DeleteProfileForm,CoverPicUpdateForm
 from django.contrib.auth import login,logout,authenticate
 from django.utils.decorators import method_decorator
 
@@ -289,9 +289,34 @@ class DeleteProfileView(DeleteView):
     #     messages.error(self.request,"Profile has been deleted !,Please signup to create a new account")
     #     return redirect(success_url)
 
+@signin_required
+def like_comment(request,*args,**kwargs):
+    cmt_id=kwargs.get("cmt_id")
+    comment=Comments.objects.get(id=cmt_id)
+    comment.liked_by.add(request.user)
+    comment.save()
+    return redirect("home")
+
+@signin_required
+def unlike_comment(request,*args,**kwargs):
+    cmt_id=kwargs.get("cmt_id")
+    comment=Comments.objects.get(id=cmt_id)
+    comment.liked_by.remove(request.user)
+    return redirect("home")
 
 
+@method_decorator(signin_required,name="dispatch")
+class CoverPicUpdateView(UpdateView):
+    model=UserProfile
+    form_class=CoverPicUpdateForm
+    template_name = "cover-pic-update.html"
+    success_url = reverse_lazy("home")
+    pk_url_kwarg = "user_id"
 
+    def form_valid(self, form):
+        messages.success(self.request,"Cover Picture has been updated")
+        self.object=form.save()
+        return super().form_valid(form)
 
 
 

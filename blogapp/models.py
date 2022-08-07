@@ -90,6 +90,12 @@ class Comments(models.Model):
     blog=models.ForeignKey(Blogs,on_delete=models.CASCADE)
     comment=models.CharField(max_length=160)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
+    liked_by=models.ManyToManyField(User,related_name="likes")
+    commented_date=models.DateTimeField(auto_now_add=True,null=True)
+    def get_comment_like_count(self):
+        cmt_like_count=self.liked_by.all().count()
+        return cmt_like_count
+
 
 
 

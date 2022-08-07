@@ -20,6 +20,10 @@ urlpatterns=[
     path("post/update/<int:post_id>",views.UpdateBlogView.as_view(),name="update-post"),
     path("post/comment/update/<int:comment_id>", views.UpdateCommentView.as_view(), name="update-comment"),
     path("accounts/remove/<int:user_id>", views.DeleteProfileView.as_view(), name="delete-profile"),
+    path("post/comment/like/<int:cmt_id>",views.like_comment,name="like-comment"),
+    path("post/comment/unlike/<int:cmt_id>",views.unlike_comment,name="unlike-comment"),
+    path("users/profile/profile/coverpic_update/<int:user_id>",views.CoverPicUpdateView.as_view(),name="coverpic-update"),
+
 
 
 

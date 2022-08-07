@@ -4,17 +4,17 @@
 <div class="container">
 <div class="profile-page tx-13">
     <div class="row">
-        <div class="col-12 grid-margin">
+        <div class="col-12 grid-margin" >
             <div class="profile-header">
                 <div class="cover">
                     <div class="gray-shade"></div>
                     {%if request.user.users.cover_pic%}
                     <figure>
-                            <img src="{{request.user.users.cover_pic.url}}"  class="img-fluid" alt="profile cover" >
+                            <img src="{{request.user.users.cover_pic.url}}"  alt="profile cover" style="height:450px;width:100%">
                     </figure>
                     {%else%}
                     <figure>
-                        <img src="{%static 'images/default_cover.jpg'%}"  class="img-fluid" alt="profile cover" >
+                        <img src="{%static 'images/default_cover.jpg'%}"   alt="profile cover" style="height:450px;width:100%">
 
 
                     </figure>
@@ -23,21 +23,16 @@
                         <div>
                             {%if request.user.users.profile_pic%}
                             <a href="{%url 'pro-pic-update' request.user.users.id%}">
-                                <img class="profile-pic" src="{{request.user.users.profile_pic.url}}" alt="profile">
+                                <img class="profile-pic " src="{{request.user.users.profile_pic.url}}" alt="profile">
                             </a>
                             {%endif%}
-                            <span class="profile-name">{{request.user}}</span>
+                            <span class="profile-name text-capitalize">{{request.user}}</span>
                         </div>
                         {%if request.user.users%}
                             <div class="d-none d-md-block ">
-                                <button class="btn btn-primary btn-icon-text btn-edit-profile">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit btn-icon-prepend">
-                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                    </svg>
-                                    <a class="text-dark" href="{%url 'profile-update' request.user.users.id%}">Edit Profile</a>
-
-                                </button>
+                                    <a class="text-dark btn btn-light" href="{%url 'coverpic-update' request.user.users.id%}">
+                                        <i class="fa-regular fa-pen-to-square fa-lg"></i>
+                                    </a>
                             </div>
                         {%else%}
                             <div class="d-none d-md-block">
@@ -205,9 +200,9 @@
                                 <div class="d-flex align-items-center">
                                     <img class="img-xs rounded-circle" src="{{request.user.users.profile_pic.url}}" alt="">
                                     <div class="ml-2">
-                                        <p>{{request.user}}</p>
+                                        <p class="text-capitalize">{{request.user}}</p>
                                         <p class="tx-11 text-muted">Share what's on your mind
-                                              <a class="btn btn-primary ml-4" data-toggle="collapse" href="#collapseblogform" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                              <a class="btn btn-light ml-4" data-toggle="collapse" href="#collapseblogform" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                 <i class="fa-solid fa-share-from-square fa-lg"></i>
                                               </a>
                                         </p>
@@ -286,7 +281,7 @@
                                 <div class="d-flex align-items-center">
                                     <img class="img-xs rounded-circle" src="{{blog.author.users.profile_pic.url}}" alt="">
                                     <div class="ml-2">
-                                        <p>{{blog.author}}</p>
+                                        <p class="text-capitalize">{{blog.author}}</p>
                                         <p class="tx-11 text-muted">Posted at {{blog.posted_date}}</p>
                                     </div>
                                 </div>
@@ -359,6 +354,7 @@
                                             <div class="coment-head">
                                                 <h5><a href="time-line.html" title="">{{comment.user}}</a></h5>
 
+
         <!--                                        code to delete comment-->
 
                                                 <span>{%if comment.user == request.user%}
@@ -386,6 +382,21 @@
                                             </div>
                                             <p>{{comment.comment}}</p>
 
+                                            {%if request.user in comment.liked_by.all%}
+                                             <p>
+                                                 <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
+                                                 <a class="text-muted mr-5" href="">{{comment.get_comment_like_count}}&nbsp;likes</span></a>
+                                                 <a class="" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
+
+                                            </p>
+
+                                            {%else%}
+                                            <p>
+                                                <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
+                                               <a class="text-muted mr-5" href="">{{comment.get_comment_like_count}}&nbsp;likes</a>
+                                                <a class="" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>
+                                            </p>
+                                            {%endif%}
                                         </div>
                                     </li>
                                 </ul>
