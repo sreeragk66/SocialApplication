@@ -340,3 +340,15 @@ class ViewMyProfileView(CreateView):
         context["blogs"]=blogs.order_by("-posted_date")
         context["comment_form"]=comment_form
         return context
+
+class ViewOthersProfile(TemplateView):
+    template_name = "others-profile.html"
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        user_id = kwargs.get("user_id")
+        user=User.objects.get(id=user_id)
+        blogs=Blogs.objects.filter(author=user.id)
+        context["user"]=user
+        context["blogs"]=blogs.order_by("-posted_date")
+        return context

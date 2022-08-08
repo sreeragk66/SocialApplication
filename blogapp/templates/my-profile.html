@@ -477,7 +477,9 @@
                                 {%for user in request.user.users.get_invitations%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                     <div class="d-flex align-items-center hover-pointer">
+                                        <a href="{%url 'others-profile' user.id%}">
                                         <img class="img-xs rounded-circle" src="{{user.users.profile_pic.url}}" alt="">
+                                        </a>
                                         <div class="ml-2">
                                             <p>{{user.username}}</p>
                                             <p class="tx-11 text-muted"></p>

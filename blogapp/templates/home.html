@@ -194,9 +194,15 @@
                                             <i class="fa-regular fa-trash-can"></i>
                                          <span class="">Delete Post</span></a>
                                         {%endif%}
-                                        <a class="dropdown-item d-flex align-items-center" href="">
-                                            <i class="fa-regular fa-eye"></i>
+                                        <a class="dropdown-item d-flex align-items-center" href="{%url 'others-profile' blog.author.id%}">
+                                            <i class="fa-regular fa-eye mr-2"></i>
                                          <span class="">View Profile</span></a>
+
+<!--                                        code to save post-->
+
+                                         <a class="dropdown-item d-flex align-items-center" href="">
+                                            <i class="fa-solid fa-bookmark mr-2"></i>
+                                         <span class="">Save Post</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +393,9 @@
                                 {%for user in request.user.users.get_invitations%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                     <div class="d-flex align-items-center hover-pointer">
+                                        <a href="{%url 'others-profile' user.id%}">
                                         <img class="img-xs rounded-circle" src="{{user.users.profile_pic.url}}" alt="">
+                                        </a>
                                         <div class="ml-2">
                                             <p>{{user.username}}</p>
                                             <p class="tx-11 text-muted"></p>

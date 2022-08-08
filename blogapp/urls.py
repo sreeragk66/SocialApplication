@@ -23,6 +23,7 @@ urlpatterns=[
     path("post/comment/unlike/<int:cmt_id>",views.unlike_comment,name="unlike-comment"),
     path("users/profile/profile/coverpic_update/<int:user_id>",views.CoverPicUpdateView.as_view(),name="coverpic-update"),
     path("users/profile/view",views.ViewMyProfileView.as_view(),name="view-myprofile"),
+    path("users/profile/others-profile/<int:user_id>",views.ViewOthersProfile.as_view(),name="others-profile")
 
 
 
