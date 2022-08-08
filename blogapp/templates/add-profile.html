@@ -1,25 +1,9 @@
-{%extends 'base.html'%}
+{%extends 'profile-basepage.html'%}
 {%block body_block%}
-<div class="row mt-lg-5">
-    <div class="col-4"></div>
-    <div class="col-4">
       <form action="" method="post" enctype="multipart/form-data">
           {%csrf_token%}
           {{form.as_p}}
-            <p>
-                {%if form.errors%}
-                    <div class="alert alert-danger" role="alert">
-                            {{form.errors}}
-                    </div>
-                 {%endif%}
-            </p>
-
-
           <button type="submit" class="btn btn-primary">Submit</button>
-
-
       </form>
-    </div>
-    <div class="col-4"></div>
-</div>
+
 {%endblock%}

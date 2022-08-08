@@ -211,11 +211,15 @@ def delete_post(request,*args,**kwargs):
 @signin_required
 def follow(request,*args,**kwargs):
     friend_id=kwargs.get("user_id")
-    friend_profile=User.objects.get(id=friend_id)
-    request.user.users.following.add(friend_profile)
-    friend_profile.save()
-    messages.success(request,"You have followed  "+friend_profile.username)
-    return redirect("home")
+    if friend_id == request.user.id:
+        messages.error(request,"You can only follow other users")
+        return redirect("home")
+    else:
+        friend_profile=User.objects.get(id=friend_id)
+        request.user.users.following.add(friend_profile)
+        friend_profile.save()
+        messages.success(request,"You have followed  "+friend_profile.username)
+        return redirect("home")
 
 @signin_required
 def unfollow(request,*args,**kwargs):

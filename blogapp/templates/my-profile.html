@@ -156,7 +156,9 @@
                             {%for user in request.user.users.get_followers%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                     <div class="d-flex align-items-center hover-pointer">
+                                        <a href="{%url 'others-profile' user.user.id%}">
                                         <img class="img-xs rounded-circle" src="{{user.profile_pic.url}}" alt="">
+                                        </a>
                                         <div class="ml-2">
                                             <p>{{user.user}}</p>
                                             <p class="tx-11 text-muted">{{user.fetch_following_count}} following</p>
@@ -511,7 +513,9 @@
                             {%for user in request.user.users.fetch_followings%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                     <div class="d-flex align-items-center hover-pointer">
+                                        <a href="{%url 'others-profile' user.id%}">
                                         <img class="img-xs rounded-circle" src="{{user.users.profile_pic.url}}" alt="">
+                                        </a>
                                         <div class="ml-2">
                                             <p>{{user}}</p>
                                             <p class="tx-11 text-muted"></p>

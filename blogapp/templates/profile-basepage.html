@@ -39,12 +39,9 @@
           <ul class="dropdown-menu">
               {%if request.user.users%}
                 <li><a class="dropdown-item" href="{%url 'view-myprofile'%}">View My Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{%url 'profile-update' request.user.users.id%}">Edit Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
               {%else%}
                 <li><a class="dropdown-item" href="{%url 'add-profile'%}">Add User Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
               {%endif%}
             <li><a class="dropdown-item" href="{%url 'password-reset'%}">Change Password</a></li>
             <li><hr class="dropdown-divider"></li>
