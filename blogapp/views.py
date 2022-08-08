@@ -73,8 +73,10 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
-        # context["blogs"]=Blogs.objects.all().exclude(author=self.request.user) exclude posts by logged in user
-        context["blogs"]=Blogs.objects.all().order_by("-posted_date")
+        #exclude posts by loggedin user
+        blogs=Blogs.objects.all().exclude(author=self.request.user)
+        context["blogs"]=blogs.order_by("-posted_date")
+        # context["blogs"]=Blogs.objects.all().order_by("-posted_date")
         context["comment_form"]=comment_form
         return context
 
@@ -317,9 +319,6 @@ class CoverPicUpdateView(UpdateView):
         messages.success(self.request,"Cover Picture has been updated")
         self.object=form.save()
         return super().form_valid(form)
-
-
-
 
 
 

@@ -49,6 +49,12 @@ class UserProfile(models.Model):
     def my_follower_count(self):
         return len(self.get_followers)
 
+    @property
+    def get_post_count(self):
+        all_posts=Blogs.objects.filter(author=self.user)
+        post_count=all_posts.count()
+        return post_count
+
 
 
 
@@ -64,6 +70,11 @@ class Blogs(models.Model):
     author=models.ForeignKey(User,on_delete=models.CASCADE,related_name="author")
     posted_date=models.DateTimeField(auto_now_add=True,null=True)
     Liked_by=models.ManyToManyField(User)
+
+    @property
+    def get_post_count(self):
+        blogs=Blogs.objects.filter(author=self.author)
+        return blogs
 
     @property
     def get_comment_count(self):
