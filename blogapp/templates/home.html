@@ -1,9 +1,9 @@
 {%extends 'base.html'%}
 {%block body_block%}
 {%load static%}
-<div class="container">
-
-    <div class="row profile-body mt-3">
+<div class="container mt-3">
+<div class="profile-page tx-13">
+    <div class="row profile-body">
         <!-- left wrapper start -->
         <div class="d-none d-md-block col-md-4 col-xl-3 left-wrapper">
             <div class="card rounded">
@@ -19,10 +19,10 @@
                                 </svg>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item d-flex align-items-center" href="{%url 'view-myprofile'%}">
+                                <a class="dropdown-item d-flex align-items-center" href="{%url 'home'%}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
                                         <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                    </svg> <span class="">My Profile</span></a>
+                                    </svg> <span class="">Home</span></a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch icon-sm mr-2">
                                         <line x1="6" y1="3" x2="6" y2="15"></line>
@@ -380,7 +380,7 @@
                 <div class="col-md-12 grid-margin">
                     <div class="card rounded">
                         <div class="card-body">
-                            <h6 class="card-title">People you may know</h6>
+                            <h6  class="card-title mb-3">People you may know</h6>
                             <!--      show suggestions to follow-->
 
                             {%if request.user.users.get_invitations%}
@@ -393,15 +393,16 @@
                                             <p class="tx-11 text-muted"></p>
                                         </div>
                                     </div>
+                                    <a class="text-white" href="{%url 'follow' user.id%}">
                                     <button class="btn btn-icon btn-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
                                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="8.5" cy="7" r="4"></circle>
                                             <line x1="20" y1="8" x2="20" y2="14"></line>
                                             <line x1="23" y1="11" x2="17" y2="11"></line>
-                                        </svg>
-                                        <a class="text-white" href="{%url 'follow' user.id%}">Follow</a>
+                                        </svg>&nbsp;Follow
                                     </button>
+                                    </a>
                                 </div>
                                 {%endfor%}
                             {%endif%}
@@ -413,7 +414,7 @@
                 <div class="col-md-12 grid-margin">
                     <div class="card rounded">
                         <div class="card-body">
-                            <h6 class="card-title">Following</h6>
+                            <h6 class="card-title mb-3">Following</h6>
                             <!--      show suggestions to follow-->
 
                             {%for user in request.user.users.fetch_followings%}
@@ -443,383 +444,6 @@
 </div>
 
 <style type="text/css">
-body{
-    background-color: #f9fafb;
-    margin-top:2px;
-    margin:0
-    }
-
-.profile-page .profile-header {
-    box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-    border: 1px solid #f2f4f9;
-}
-
-.profile-page .profile-header .cover {
-    position: relative;
-    border-radius: .25rem .25rem 0 0;
-}
-
-
-.profile-page .profile-header .cover figure {
-    margin-bottom: 0;
-}
-
-@media (max-width: 767px) {
-    .profile-page .profile-header .cover figure {
-        height: 110px;
-        overflow: hidden;
-    }
-}
-
-@media (min-width: 2400px) {
-    .profile-page .profile-header .cover figure {
-        height: 280px;
-        overflow: hidden;
-    }
-}
-
-.profile-page .profile-header .cover figure img {
-    border-radius: .25rem .25rem 0 0;
-    width: 100%;
-}
-
-@media (max-width: 767px) {
-    .profile-page .profile-header .cover figure img {
-        -webkit-transform: scale(2);
-        transform: scale(2);
-        margin-top: 15px;
-    }
-}
-
-@media (min-width: 2400px) {
-    .profile-page .profile-header .cover figure img {
-        margin-top: -55px;
-    }
-}
-
-.profile-page .profile-header .cover .gray-shade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background: linear-gradient(rgba(255, 255, 255, 0.1), #fff 99%);
-}
-
-.profile-page .profile-header .cover .cover-body {
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    z-index: 2;
-    width: 100%;
-    padding: 0 20px;
-}
-
-.profile-page .profile-header .cover .cover-body .profile-pic {
-    border-radius: 50%;
-    width: 100px;
-}
-
-@media (max-width: 767px) {
-    .profile-page .profile-header .cover .cover-body .profile-pic {
-        width: 70px;
-    }
-}
-
-.profile-page .profile-header .cover .cover-body .profile-name {
-    font-size: 20px;
-    font-weight: 600;
-    margin-left: 17px;
-}
-
-.profile-page .profile-header .header-links {
-    padding: 15px;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 0 0 .25rem .25rem;
-}
-
-.profile-page .profile-header .header-links ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.profile-page .profile-header .header-links ul li a {
-    color: #000;
-    -webkit-transition: all .2s ease;
-    transition: all .2s ease;
-}
-
-.profile-page .profile-header .header-links ul li:hover,
-.profile-page .profile-header .header-links ul li.active {
-    color: #727cf5;
-}
-
-.profile-page .profile-header .header-links ul li:hover a,
-.profile-page .profile-header .header-links ul li.active a {
-    color: #727cf5;
-}
-
-.profile-page .profile-body .left-wrapper .social-links a {
-    width: 30px;
-    height: 30px;
-}
-
-.profile-page .profile-body .right-wrapper .latest-photos > .row {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.profile-page .profile-body .right-wrapper .latest-photos > .row > div {
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-.profile-page .profile-body .right-wrapper .latest-photos > .row > div figure {
-    -webkit-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
-    margin-bottom: 6px;
-}
-
-.profile-page .profile-body .right-wrapper .latest-photos > .row > div figure:hover {
-    -webkit-transform: scale(1.06);
-    transform: scale(1.06);
-}
-
-.profile-page .profile-body .right-wrapper .latest-photos > .row > div figure img {
-    border-radius: .25rem;
-}
-
-.rtl .profile-page .profile-header .cover .cover-body .profile-name {
-    margin-left: 0;
-    margin-right: 17px;
-}
-.img-xs {
-    width: 37px;
-    height: 37px;
-}
-.rounded-circle {
-    border-radius: 50% !important;
-}
-img {
-    vertical-align: middle;
-    border-style: none;
-}
-
-.card-header:first-child {
-    border-radius: 0 0 0 0;
-}
-.card-header {
-    padding: 0.875rem 1.5rem;
-    margin-bottom: 0;
-    background-color: rgba(0, 0, 0, 0);
-    border-bottom: 1px solid #f2f4f9;
-}
-
-.card-footer:last-child {
-    border-radius: 0 0 0 0;
-}
-.card-footer {
-    padding: 0.875rem 1.5rem;
-    background-color: rgba(0, 0, 0, 0);
-    border-top: 1px solid #f2f4f9;
-}
-
-.grid-margin {
-    margin-bottom: 1rem;
-}
-
-.card {
-    box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-    -webkit-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-    -moz-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-    -ms-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
-}
-.rounded {
-    border-radius: 0.25rem !important;
-}
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid #f2f4f9;
-    border-radius: 0.25rem;
-}
-/*--- comment area ---*/
-
-.coment-area {
-    display: inline-block;
-    margin-top: 10px;
-    width: 100%;
-}
-
-.we-comet {
-    float: left;
-    width: 100%;
-    padding-left: 0;
-    list-style: none;
-}
-
-.we-comet > li {
-    display: inline-block;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.we-comet > li:last-child {
-    margin-bottom: 0;
-}
-
-.comet-avatar {
-    display: table-cell;
-    max-width: 7.6%;
-    vertical-align: top;
-    width: 7.6%;
-}
-
-.we-comment {
-    border: 1px solid #ede9e9;
-    display: table-cell;
-    margin-left: 20px;
-    padding: 10px;
-    vertical-align: top;
-    position: relative;
-    width: 65%;
-}
-
-.we-comment::before,
-.peoples-mesg-box > ul > li p:before {
-    border-bottom: 10px solid transparent;
-    border-right: 11px solid #ede9e9;
-    border-top: 10px solid transparent;
-    left: -11px;
-    top: 10px;
-    position: absolute;
-    content: '';
-}
-
-.we-comment::after,
-.peoples-mesg-box > ul > li p:after {
-    border-bottom: 8px solid transparent;
-    border-right: 9px solid #fff;
-    border-top: 8px solid transparent;
-    left: -9px;
-    top: 12px;
-    position: absolute;
-    content: '';
-}
-
-.we-comet > li ul {
-    margin-left: 55px;
-    margin-top: 20px;
-    padding-left: 0;
-    list-style: none;
-}
-
-.we-comet > li ul li {
-    margin-bottom: 20px;
-}
-
-.we-comet li a.showmore {
-    display: table;
-    font-size: 12px;
-    margin: 0 auto;
-    text-transform: capitalize;
-}
-
-.we-comet > li ul li:last-child {
-    margin-bottom: 0;
-}
-
-.coment-head {
-    display: inline-block;
-    width: 100%;
-}
-
-.coment-head > h5 {
-    font-size: 15px;
-    font-weight: 600;
-    padding-bottom: 5px;
-    text-transform: capitalize;
-    display: inline-block;
-    margin-bottom: 0;
-    color: #2a2a2a;
-}
-
-.we-comment > p {
-    font-size: 14px;
-    line-height: 26px;
-    margin-bottom: 0;
-    max-width: 100%;
-    margin-top: 5px;
-}
-
-.we-reply {
-    text-transform: capitalize;
-    font-size: 13px;
-    display: inline-block;
-    margin-left: 10px;
-}
-
-.coment-head > span {
-    color: #999;
-    font-size: 12px;
-    padding-left: 10px;
-    display: inline-block;
-}
-
-li.post-comment .comet-avatar {
-    display: inline-block;
-    max-width: 6%;
-    vertical-align: top;
-    width: 6%;
-}
-
-.post-comt-box {
-    display: inline-block;
-    padding-left: 15px;
-    position: relative;
-    width: 93%;
-}
-
-.post-comt-box form textarea {
-    background: #f3f3f3 none repeat scroll 0 0;
-    border-color: transparent;
-    border-radius: 3px;
-    color: #000000;
-    font-size: 13.5px;
-    font-weight: 500;
-    height: 40px;
-    line-height: 16px;
-}
-
-
-
-
-.post-comt-box form button {
-    bottom: 2px;
-    position: absolute;
-    right: 0;
-    background: none;
-}
-
-a{
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: none;
-  cursor: pointer;
-}
-
 
 
 </style>
