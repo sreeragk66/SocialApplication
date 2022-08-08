@@ -6,7 +6,6 @@ urlpatterns=[
     path("accounts/signout", views.signout, name="signout"),
     path("home",views.IndexView.as_view(),name="home"),
     path("users/profile/add",views.CreateUserProfileView.as_view(),name="add-profile"),
-    path("users/profile/view",views.ViewMyProfileView.as_view(),name="view-profile"),
     path("users/password/change", views.PasswordResetView.as_view(), name="password-reset"),
     path("users/profile/change/<int:user_id>", views.UpdateProfileView.as_view(), name="profile-update"),
     path("post/comment/<int:post_id>",views.add_comment,name="add-comment"),
@@ -23,6 +22,7 @@ urlpatterns=[
     path("post/comment/like/<int:cmt_id>",views.like_comment,name="like-comment"),
     path("post/comment/unlike/<int:cmt_id>",views.unlike_comment,name="unlike-comment"),
     path("users/profile/profile/coverpic_update/<int:user_id>",views.CoverPicUpdateView.as_view(),name="coverpic-update"),
+    path("users/profile/view",views.ViewMyProfileView.as_view(),name="view-myprofile"),
 
 
 

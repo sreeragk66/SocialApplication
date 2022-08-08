@@ -95,9 +95,6 @@ class CreateUserProfileView(CreateView):
         self.object=form.save()
         return super().form_valid(form)
 
-@method_decorator(signin_required,name="dispatch")
-class ViewMyProfileView(TemplateView):
-    template_name="view-profile.html"
 
 @method_decorator(signin_required,name="dispatch")
 class PasswordResetView(FormView):
@@ -322,3 +319,24 @@ class CoverPicUpdateView(UpdateView):
 
 
 
+
+@method_decorator(signin_required,name="dispatch")
+class ViewMyProfileView(CreateView):
+    template_name="my-profile.html"
+    form_class=BlogForm
+    success_url = reverse_lazy("home")
+
+    def form_valid(self, form):
+        form.instance.author=self.request.user
+        messages.success(self.request,"Post has been saved")
+        self.object=form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        comment_form=CommentForm()
+        #exclude posts by loggedin user
+        blogs=Blogs.objects.filter(author=self.request.user)
+        context["blogs"]=blogs.order_by("-posted_date")
+        context["comment_form"]=comment_form
+        return context

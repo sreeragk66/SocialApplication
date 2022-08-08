@@ -38,7 +38,7 @@
           </a>
           <ul class="dropdown-menu">
               {%if request.user.users%}
-                <li><a class="dropdown-item" href="{%url 'view-profile'%}">View My Profile</a></li>
+                <li><a class="dropdown-item" href="{%url 'view-myprofile'%}">View My Profile</a></li>
                 <li><a class="dropdown-item" href="{%url 'profile-update' request.user.users.id%}">Edit Profile</a></li>
               {%else%}
                 <li><a class="dropdown-item" href="{%url 'add-profile'%}">Add User Profile</a></li>
