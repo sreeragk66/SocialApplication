@@ -23,13 +23,13 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
 
-        Travel Blog</a>
+        <i class="fa-solid fa-circle-nodes fa-2x mr-2 ml-2"></i>Connect</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <ul class="navbar-nav  mb-2 mb-lg-0">
+        <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{%url 'home'%}">Home</a>
         </li>
@@ -55,15 +55,15 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           {%if request.user.users.profile_pic%}
           <li class="nav-item">
-          <div  style="height:60px;width:70px;border-radius:12px">
+              <div class="d-flex flex-column align-items-right text-center" >
               <a href="{%url 'pro-pic-update' request.user.users.id%}">
-                    <img src="{{request.user.users.profile_pic.url}}" alt="..." class="img-rounded" style="height:100%;width:100%" >
+                    <img src="{{request.user.users.profile_pic.url}}" alt="..." class="rounded-circle p-1" style="width:60px;height:60px;">
               </a>
-          </div>
+            </div>
           </li>
           {%endif%}
          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-capitalize" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle text-capitalize active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <strong>{{request.user}}</strong>
           </a>
 

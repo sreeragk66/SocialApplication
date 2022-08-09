@@ -91,7 +91,11 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center">
+                                    {%if request.user.users.profile_pic%}
                                     <img class="img-xs rounded-circle" src="{{request.user.users.profile_pic.url}}" alt="">
+                                    {%else%}
+                                    <img class="img-xs rounded-circle" src="{%static 'images/default-profile.png'%}" alt="">
+                                    {%endif%}
                                     <div class="ml-2">
                                         <p class="text-capitalize">{{request.user}}</p>
                                         <p class="tx-11 text-muted">Share what's on your mind

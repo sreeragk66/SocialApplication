@@ -51,6 +51,7 @@ class LoginView(FormView):
 
             if user:
                 login(request,user)
+                messages.success(request,f"Welcome {request.user}")
                 return redirect("home")
             else:
                 messages.error(request, "Incorrect username or password")
@@ -73,12 +74,17 @@ class IndexView(CreateView):
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
-        #exclude posts by loggedin user
-        blogs=Blogs.objects.all().exclude(author=self.request.user)
-        context["blogs"]=blogs.order_by("-posted_date")
-        # context["blogs"]=Blogs.objects.all().order_by("-posted_date")
-        context["comment_form"]=comment_form
-        return context
+        blogs = Blogs.objects.all().order_by("-posted_date")
+        # check if a user has userprofile
+        if hasattr(self.request.user,'users'):
+            followings=self.request.user.users.fetch_followings
+            filtered_blogs=[blog for blog in blogs if blog.author in followings]
+            context["blogs"]=filtered_blogs
+            context["comment_form"] = comment_form
+            return context
+        else:
+            context["comment_form"]=comment_form
+            return context
 
 
 
@@ -286,11 +292,6 @@ class DeleteProfileView(DeleteView):
             return render(request,self.template_name,{"form":form})
 
 
-    # def form_valid(self, form):
-    #     success_url = self.get_success_url()
-    #     self.object.delete()
-    #     messages.error(self.request,"Profile has been deleted !,Please signup to create a new account")
-    #     return redirect(success_url)
 
 @signin_required
 def like_comment(request,*args,**kwargs):
