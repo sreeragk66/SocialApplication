@@ -276,15 +276,19 @@
                             <h6 class="card-title">My Posts</h6>
                             <div class="latest-photos">
                                 <div class="row">
-                                    {%for post in myposts%}
-                                    {%if post.image%}
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="{{post.image.url}}" alt="">
-                                        </figure>
-                                    </div>
+                                    {%if request.user.users.get_post_count == 0%}
+                                    <p class="text-center text-muted mt-3">No posts to display</p>
+                                    {%else%}
+                                        {%for post in myposts%}
+                                        {%if post.image%}
+                                        <div class="col-md-4">
+                                            <figure>
+                                                <img class="img-fluid" src="{{post.image.url}}" alt="">
+                                            </figure>
+                                        </div>
+                                        {%endif%}
+                                        {%endfor%}
                                     {%endif%}
-                                    {%endfor%}
                                 </div>
                             </div>
                         </div>
@@ -295,7 +299,6 @@
                         <div class="card-body">
                             <h6  class="card-title mb-3">People you may know</h6>
                             <!--      show suggestions to follow-->
-
                             {%if request.user.users.get_invitations%}
                                 {%for user in request.user.users.get_invitations%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
@@ -320,6 +323,8 @@
                                     </a>
                                 </div>
                                 {%endfor%}
+                            {%else%}
+                            <p class="text-muted text-center mb-3">No suggestions</p>
                             {%endif%}
                         </div>
                     </div>

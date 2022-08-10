@@ -77,7 +77,6 @@ class IndexView(CreateView):
         blogs = Blogs.objects.all().order_by("-posted_date")
         myposts = Blogs.objects.filter(author=self.request.user).order_by("-posted_date")
 
-
         # check if a user has userprofile
         if hasattr(self.request.user,'users'):
             followings=self.request.user.users.fetch_followings
@@ -366,6 +365,8 @@ class ViewOthersProfile(TemplateView):
         user_id = kwargs.get("user_id")
         user=User.objects.get(id=user_id)
         blogs=Blogs.objects.filter(author=user.id)
+        saved_posts=user.users.saved_posts.all()
+        context["saved_posts"]=saved_posts.order_by("-posted_date")
         context["user"]=user
         context["blogs"]=blogs.order_by("-posted_date")
         return context
@@ -394,10 +395,12 @@ class ViewSavedPosts(TemplateView):
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
+        myposts=Blogs.objects.filter(author=self.request.user).order_by("-posted_date")
         if hasattr(self.request.user, 'users'):
             saved_posts=self.request.user.users.saved_posts.all()
             context["saved_posts"]=saved_posts.order_by("-posted_date")
             context["comment_form"]=comment_form
+            context["myposts"]=myposts
             return context
         else:
             context["comment_form"] = comment_form
