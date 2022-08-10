@@ -62,12 +62,12 @@
             </div>
           </li>
           {%endif%}
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown"  style="width:100px;">
           <a class="nav-link dropdown-toggle text-capitalize active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <strong>{{request.user}}</strong>
           </a>
 
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" style="min-width:3rem;">
 
                 <li><a class="dropdown-item" href="{%url 'signout'%}"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Logout</a></li>
           </ul>
