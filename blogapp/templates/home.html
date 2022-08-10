@@ -168,7 +168,6 @@
                     </div>
                 </div>
 <!--                section to display blogs,comments,likes-->
-
                 <div class="col-md-12">
                     {%for blog in blogs%}
                     {%if blog.image%}
@@ -336,54 +335,18 @@
                 <div class="col-md-12 grid-margin">
                     <div class="card rounded">
                         <div class="card-body">
-                            <h6 class="card-title">Saved posts</h6>
+                            <h6 class="card-title">My posts</h6>
                             <div class="latest-photos">
                                 <div class="row">
+                                    {%for post in myposts%}
+                                    {%if post.image%}
                                     <div class="col-md-4">
                                         <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                            <img class="img-fluid" src="{{post.image.url}}" alt="">
                                         </figure>
                                     </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure class="mb-0">
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure class="mb-0">
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure class="mb-0">
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar9.png" alt="">
-                                        </figure>
-                                    </div>
+                                    {%endif%}
+                                    {%endfor%}
                                 </div>
                             </div>
                         </div>

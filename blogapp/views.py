@@ -75,12 +75,15 @@ class IndexView(CreateView):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
         blogs = Blogs.objects.all().order_by("-posted_date")
+        myposts = Blogs.objects.filter(author=self.request.user).order_by("-posted_date")
         # check if a user has userprofile
         if hasattr(self.request.user,'users'):
             followings=self.request.user.users.fetch_followings
             filtered_blogs=[blog for blog in blogs if blog.author in followings]
             context["blogs"]=filtered_blogs
             context["comment_form"] = comment_form
+            context["myposts"]=myposts
+            context["blogcount"]=blogs.count()
             return context
         else:
             context["comment_form"]=comment_form
@@ -224,7 +227,7 @@ def follow(request,*args,**kwargs):
         friend_profile=User.objects.get(id=friend_id)
         request.user.users.following.add(friend_profile)
         friend_profile.save()
-        messages.success(request,"You have followed  "+friend_profile.username)
+        messages.success(request,"You have started following "+friend_profile.username)
         return redirect("home")
 
 @signin_required
@@ -233,7 +236,7 @@ def unfollow(request,*args,**kwargs):
     friend_profile=User.objects.get(id=friend_id)
     request.user.users.following.remove(friend_profile)
     friend_profile.save()
-    messages.success(request,"You have unfollowed  "+friend_profile.username)
+    messages.success(request,"You have unfollowed "+friend_profile.username)
     return redirect("home")
 
 @method_decorator(signin_required,name="dispatch")

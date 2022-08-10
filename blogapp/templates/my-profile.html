@@ -253,6 +253,13 @@
                         </div>
                     </div>
                 </div>
+                {%if request.user.users.get_post_count == 0 %}
+                <div class="card card-body">
+                    <div class="card-body">
+                    <p class="mb-3 tx-14 text-center">You have no posts</p>
+                    </div>
+                </div>
+                {%endif%}
 <!--                section to display blogs,comments,likes-->
 
                 <div class="col-md-12">
