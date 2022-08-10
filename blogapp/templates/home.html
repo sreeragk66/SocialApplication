@@ -19,22 +19,10 @@
                                 </svg>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item d-flex align-items-center" href="{%url 'home'%}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
-                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                    </svg> <span class="">Home</span></a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch icon-sm mr-2">
-                                        <line x1="6" y1="3" x2="6" y2="15"></line>
-                                        <circle cx="18" cy="6" r="3"></circle>
-                                        <circle cx="6" cy="18" r="3"></circle>
-                                        <path d="M18 9a9 9 0 0 1-9 9"></path>
-                                    </svg> <span class="">Update</span></a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm mr-2">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg> <span class="">View all</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{%url 'view-myprofile'%}">
+                                  <span class=""><i class="fa-solid fa-user mr-2"></i>My Profile</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{%url 'view-saved_posts'%}">
+                                    <span class=""><i class="fa-solid fa-bookmark mr-2"></i>Saved posts</span></a>
                             </div>
                         </div>
                     </div>
@@ -203,11 +191,16 @@
                                             <i class="fa-regular fa-eye mr-2"></i>
                                          <span class="">View Profile</span></a>
 
-<!--                                        code to save post-->
-
-                                         <a class="dropdown-item d-flex align-items-center" href="">
+<!--                                        code to save and unsave post-->
+                                        {%if blog in saved_posts%}
+                                        <a class="dropdown-item d-flex align-items-center" href="{%url 'unsave-post' blog.id%}">
+                                            <i class="fa-solid fa-bookmark mr-2"></i>
+                                         <span class="">Saved</span></a>
+                                        {%else%}
+                                         <a class="dropdown-item d-flex align-items-center" href="{%url 'save-post' blog.id%}">
                                             <i class="fa-solid fa-bookmark mr-2"></i>
                                          <span class="">Save Post</span></a>
+                                        {%endif%}
                                     </div>
                                 </div>
                             </div>
@@ -335,7 +328,7 @@
                 <div class="col-md-12 grid-margin">
                     <div class="card rounded">
                         <div class="card-body">
-                            <h6 class="card-title">My posts</h6>
+                            <h6 class="card-title">My Posts</h6>
                             <div class="latest-photos">
                                 <div class="row">
                                     {%for post in myposts%}

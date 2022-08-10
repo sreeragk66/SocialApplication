@@ -85,7 +85,7 @@
                                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
                                 <polyline points="21 15 16 10 5 21"></polyline>
                             </svg>
-                            <a class="pt-1px d-none d-md-block" href="#">Saved Posts</a>
+                            <a class="pt-1px d-none d-md-block" href="{%url 'view-saved_posts'%}">{{saved_posts.count}}&nbsp;Saved Posts</a>
                         </li>
                     </ul>
                 </div>
@@ -110,21 +110,9 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item d-flex align-items-center" href="{%url 'home'%}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
-                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                    </svg> <span class="">Home</span></a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch icon-sm mr-2">
-                                        <line x1="6" y1="3" x2="6" y2="15"></line>
-                                        <circle cx="18" cy="6" r="3"></circle>
-                                        <circle cx="6" cy="18" r="3"></circle>
-                                        <path d="M18 9a9 9 0 0 1-9 9"></path>
-                                    </svg> <span class="">Update</span></a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm mr-2">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg> <span class="">View all</span></a>
+                                    <span class=""><i class="fa-solid fa-house-user mr-2"></i>Home</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{%url 'view-saved_posts'%}">
+                                    <span class=""><i class="fa-solid fa-bookmark mr-2"></i>Saved Posts</span></a>
                             </div>
                         </div>
                     </div>
@@ -174,9 +162,17 @@
         <!-- left wrapper end -->
         <!-- middle wrapper start -->
         <!--        section to display blog post form-->
+
         <div class="col-md-8 col-xl-6 middle-wrapper">
             <div class="row">
                 <div class="col-md-12 grid-margin">
+                    {%if request.user.users.get_post_count == 0 %}
+                        <div class="card card-body mb-3">
+                            <div class="card-body">
+                                <p class="tx-14 text-center">You have no posts</p>
+                            </div>
+                        </div>
+                    {%endif%}
                     <div class="card rounded">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
@@ -253,13 +249,7 @@
                         </div>
                     </div>
                 </div>
-                {%if request.user.users.get_post_count == 0 %}
-                <div class="card card-body">
-                    <div class="card-body">
-                    <p class="mb-3 tx-14 text-center">You have no posts</p>
-                    </div>
-                </div>
-                {%endif%}
+
 <!--                section to display blogs,comments,likes-->
 
                 <div class="col-md-12">
@@ -286,16 +276,13 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                                         {%if blog.author == request.user%}
                                         <a class="dropdown-item d-flex align-items-center" href="{%url 'update-post' blog.id%}">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                            <i class="fa-regular fa-pen-to-square mr-2"></i>
                                            <span class="">Edit Post</span></a>
 
                                         <a class="dropdown-item d-flex align-items-center" href="{%url 'delete-post' blog.id%}">
-                                            <i class="fa-regular fa-trash-can"></i>
+                                            <i class="fa-regular fa-trash-can mr-2"></i>
                                          <span class="">Delete Post</span></a>
                                         {%endif%}
-                                        <a class="dropdown-item d-flex align-items-center" href="">
-                                            <i class="fa-regular fa-eye"></i>
-                                         <span class="">View Profile</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -426,51 +413,15 @@
                             <h6 class="card-title">Saved posts</h6>
                             <div class="latest-photos">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure class="mb-0">
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure class="mb-0">
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="">
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure class="mb-0">
-                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar9.png" alt="">
-                                        </figure>
-                                    </div>
+                                    {%for post in saved_posts%}
+                                            {%if post.image%}
+                                                <div class="col-md-4">
+                                                    <figure>
+                                                        <img class="img-fluid" src="{{post.image.url}}" alt="">
+                                                    </figure>
+                                                </div>
+                                            {%endif%}
+                                    {%endfor%}
                                 </div>
                             </div>
                         </div>

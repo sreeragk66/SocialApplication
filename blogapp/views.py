@@ -76,14 +76,18 @@ class IndexView(CreateView):
         comment_form=CommentForm()
         blogs = Blogs.objects.all().order_by("-posted_date")
         myposts = Blogs.objects.filter(author=self.request.user).order_by("-posted_date")
+
+
         # check if a user has userprofile
         if hasattr(self.request.user,'users'):
             followings=self.request.user.users.fetch_followings
             filtered_blogs=[blog for blog in blogs if blog.author in followings]
+            saved_posts = self.request.user.users.saved_posts.all()
             context["blogs"]=filtered_blogs
             context["comment_form"] = comment_form
             context["myposts"]=myposts
             context["blogcount"]=blogs.count()
+            context["saved_posts"]=saved_posts
             return context
         else:
             context["comment_form"]=comment_form
@@ -334,6 +338,7 @@ class ViewMyProfileView(CreateView):
     form_class=BlogForm
     success_url = reverse_lazy("home")
 
+
     def form_valid(self, form):
         form.instance.author=self.request.user
         messages.success(self.request,"Post has been saved")
@@ -343,12 +348,16 @@ class ViewMyProfileView(CreateView):
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
+        saved_posts = self.request.user.users.saved_posts.all()
         #exclude posts by loggedin user
         blogs=Blogs.objects.filter(author=self.request.user)
         context["blogs"]=blogs.order_by("-posted_date")
         context["comment_form"]=comment_form
+        context["saved_posts"]=saved_posts.order_by("-posted_date")
         return context
 
+
+@method_decorator(signin_required,name="dispatch")
 class ViewOthersProfile(TemplateView):
     template_name = "others-profile.html"
 
@@ -360,3 +369,41 @@ class ViewOthersProfile(TemplateView):
         context["user"]=user
         context["blogs"]=blogs.order_by("-posted_date")
         return context
+
+
+def save_post(request,*args,**kwargs):
+    post_id = kwargs.get("post_id")
+    post = Blogs.objects.get(id=post_id)
+    userprofile = User.objects.get(id=request.user.id)
+    userprofile.users.saved_posts.add(post)
+    userprofile.save()
+    messages.success(request,"post saved")
+    return render(request, "saved_posts.html")
+
+def unsave_post(request,*args,**kwargs):
+    post_id = kwargs.get("post_id")
+    post = Blogs.objects.get(id=post_id)
+    userprofile = User.objects.get(id=request.user.id)
+    userprofile.users.saved_posts.remove(post)
+    messages.success(request,"post removed from saved list")
+    return render(request, "saved_posts.html")
+
+class ViewSavedPosts(TemplateView):
+    template_name = "saved_posts.html"
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        comment_form=CommentForm()
+        if hasattr(self.request.user, 'users'):
+            saved_posts=self.request.user.users.saved_posts.all()
+            context["saved_posts"]=saved_posts.order_by("-posted_date")
+            context["comment_form"]=comment_form
+            return context
+        else:
+            context["comment_form"] = comment_form
+            return context
+
+
+
+
+

@@ -24,7 +24,7 @@ class LoginForm(forms.Form):
 class UserProfileForm(ModelForm):
     class Meta:
         model=UserProfile
-        exclude=("user","following")
+        exclude=("user","following","saved_posts")
         widgets={
             "date_of_birth":forms.DateInput(attrs={"class":"form-control","type":"date"}),
             "bio":forms.TextInput(attrs={"class":"form-control"}),
