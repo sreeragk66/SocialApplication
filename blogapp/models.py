@@ -36,6 +36,13 @@ class UserProfile(models.Model):
         following_list=[u for u in self.fetch_followings]
         invitations=[user for user in user_list if user not in following_list] #excluding following list from all users
         return invitations
+
+    @property
+    def get_invitations_count(self):
+        invitation_count=self.get_invitations.count()
+        return invitation_count
+
+
     @property
     def get_followers(self):
         all_users_profile = UserProfile.objects.all()
@@ -54,7 +61,9 @@ class UserProfile(models.Model):
         all_posts=Blogs.objects.filter(author=self.user)
         post_count=all_posts.count()
         return post_count
-
+    def saved_post_count(self):
+        saved_post_count=self.saved_posts.all().count()
+        return saved_post_count
 
 
 
@@ -103,11 +112,16 @@ class Comments(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     liked_by=models.ManyToManyField(User,related_name="likes")
     commented_date=models.DateTimeField(auto_now_add=True,null=True)
+
+    @property
     def get_comment_like_count(self):
         cmt_like_count=self.liked_by.all().count()
         return cmt_like_count
-
-
+    @property
+    def get_liked_users(self):
+        liked_users=self.liked_by.all()
+        users=[user.username for user in liked_users]
+        return users
 
 
 

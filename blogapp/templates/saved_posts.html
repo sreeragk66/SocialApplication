@@ -20,21 +20,9 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item d-flex align-items-center" href="{%url 'home'%}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
-                                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                                    </svg> <span class="">Home</span></a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch icon-sm mr-2">
-                                        <line x1="6" y1="3" x2="6" y2="15"></line>
-                                        <circle cx="18" cy="6" r="3"></circle>
-                                        <circle cx="6" cy="18" r="3"></circle>
-                                        <path d="M18 9a9 9 0 0 1-9 9"></path>
-                                    </svg> <span class="">Update</span></a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm mr-2">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg> <span class="">View all</span></a>
+                                  <span class=""><i class="fa-solid fa-house-user fa-lg mr-2"></i>Home</span></a>
+                                <a class="dropdown-item d-flex align-items-center" href="{%url 'view-myprofile'%}">
+                                   <span class=""><i class="fa-solid fa-user fa-lg mr-2"></i>My Profile</span></a>
                             </div>
                         </div>
                     </div>
@@ -234,18 +222,19 @@
                                             <p>{{comment.comment}}</p>
 
                                             {%if request.user in comment.liked_by.all%}
-                                             <p>
+                                            <p>
                                                  <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
-                                                 <a class="text-muted mr-5" href="">{{comment.get_comment_like_count}}&nbsp;likes</span></a>
-                                                 <a class="" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
-
+                                                 <a class="text-muted" href="">{{comment.get_comment_like_count}}</span></a>
+                                                 <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
+                                                 <a class="ml-5" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
                                             </p>
 
                                             {%else%}
                                             <p>
                                                 <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
-                                               <a class="text-muted mr-5" href="">{{comment.get_comment_like_count}}&nbsp;likes</a>
-                                                <a class="" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>
+                                               <a class="text-muted" href="">{{comment.get_comment_like_count}}</a>
+                                                <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
+                                                <a class="ml-5" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>
                                             </p>
                                             {%endif%}
                                         </div>

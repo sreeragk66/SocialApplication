@@ -45,12 +45,14 @@
                     </div>
                 </div>
             </div>
-                            <div class="col-md-12 grid-margin mt-3">
+            <div class="col-md-12 grid-margin mt-3">
                     <div class="card rounded">
                         <div class="card-body">
+<!--                            display followers-->
                             <h6 class="card-title">Followers</h6>
-                            <!--      show suggestions to follow-->
-
+                            {%if request.user.users.my_follower_count == 0%}
+                            <p class="text-center text-muted mt-3">You have no followers</p>
+                            {%else%}
                             {%for user in request.user.users.get_followers%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                     <div class="d-flex align-items-center hover-pointer">
@@ -64,10 +66,10 @@
                                     </div>
                                 </div>
                             {%endfor%}
-
+                            {%endif%}
                         </div>
                     </div>
-                </div>
+            </div>
         </div>
         <!-- left wrapper end -->
         <!-- middle wrapper start -->
@@ -94,42 +96,7 @@
 
                                     </div>
                                 </div>
-                                <div class="dropdown">
-                                    <button class="btn p-0 " type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg pb-3px">
-                                            <circle cx="12" cy="12" r="1"></circle>
-                                            <circle cx="19" cy="12" r="1"></circle>
-                                            <circle cx="5" cy="12" r="1"></circle>
-                                        </svg>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-meh icon-sm mr-2">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="8" y1="15" x2="16" y2="15"></line>
-                                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                                            </svg> <span class=""></span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-right-up icon-sm mr-2">
-                                                <polyline points="10 9 15 4 20 9"></polyline>
-                                                <path d="M4 20h7a4 4 0 0 0 4-4V4"></path>
-                                            </svg> <span class=""></span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2 icon-sm mr-2">
-                                                <circle cx="18" cy="5" r="3"></circle>
-                                                <circle cx="6" cy="12" r="3"></circle>
-                                                <circle cx="18" cy="19" r="3"></circle>
-                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                            </svg> <span class=""></span></a>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy icon-sm mr-2">
-                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                            </svg> <span class=""></span></a>
-                                    </div>
-                                </div>
+
                             </div>
 
                         </div>
@@ -276,20 +243,20 @@
                                                 <a class="we-reply" href="#" title="Reply"></a>
                                             </div>
                                             <p>{{comment.comment}}</p>
-
                                             {%if request.user in comment.liked_by.all%}
                                              <p>
                                                  <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
-                                                 <a class="text-muted mr-5" href="">{{comment.get_comment_like_count}}&nbsp;likes</span></a>
-                                                 <a class="" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
-
+                                                 <a class="text-muted" href="">{{comment.get_comment_like_count}}</span></a>
+                                                 <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
+                                                 <a class="ml-5" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
                                             </p>
 
                                             {%else%}
                                             <p>
                                                 <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
-                                               <a class="text-muted mr-5" href="">{{comment.get_comment_like_count}}&nbsp;likes</a>
-                                                <a class="" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>
+                                               <a class="text-muted" href="">{{comment.get_comment_like_count}}</a>
+                                                <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
+                                                <a class="ml-5" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>
                                             </p>
                                             {%endif%}
                                         </div>
@@ -328,18 +295,22 @@
                 <div class="col-md-12 grid-margin">
                     <div class="card rounded">
                         <div class="card-body">
-                            <h6 class="card-title">My Posts</h6>
+                            <h6 class="card-title">My Posts<span class="ml-5"></span></h6>
                             <div class="latest-photos">
                                 <div class="row">
-                                    {%for post in myposts%}
-                                    {%if post.image%}
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <img class="img-fluid" src="{{post.image.url}}" alt="">
-                                        </figure>
-                                    </div>
+                                    {%if request.user.users.get_post_count == 0%}
+                                    <p class="text-center text-muted mt-3">No posts to display</p>
+                                    {%else%}
+                                        {%for post in myposts%}
+                                        {%if post.image%}
+                                        <div class="col-md-4">
+                                            <figure>
+                                                <img class="img-fluid" src="{{post.image.url}}" alt="">
+                                            </figure>
+                                        </div>
+                                        {%endif%}
+                                        {%endfor%}
                                     {%endif%}
-                                    {%endfor%}
                                 </div>
                             </div>
                         </div>
@@ -350,7 +321,6 @@
                         <div class="card-body">
                             <h6  class="card-title mb-3">People you may know</h6>
                             <!--      show suggestions to follow-->
-
                             {%if request.user.users.get_invitations%}
                                 {%for user in request.user.users.get_invitations%}
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
@@ -375,6 +345,8 @@
                                     </a>
                                 </div>
                                 {%endfor%}
+                            {%else%}
+                            <p class="text-muted text-center mb-3">No suggestions</p>
                             {%endif%}
                         </div>
                     </div>
@@ -385,26 +357,26 @@
                     <div class="card rounded">
                         <div class="card-body">
                             <h6 class="card-title mb-3">Following</h6>
-                            <!--      show suggestions to follow-->
-
-                            {%for user in request.user.users.fetch_followings%}
-                                <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                                    <div class="d-flex align-items-center hover-pointer">
-                                        <a href="{%url 'others-profile' user.id%}">
-                                        <img class="img-xs rounded-circle" src="{{user.users.profile_pic.url}}" alt="">
-                                        </a>
-                                        <div class="ml-2">
-                                            <p>{{user}}</p>
-                                            <p class="tx-11 text-muted"></p>
+                            {%if request.user.users.fetch_following_count == 0%}
+                            <p class="text-center text-muted mt-3">You are not following anyone</p>
+                            {%else%}
+                                {%for user in request.user.users.fetch_followings%}
+                                    <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                        <div class="d-flex align-items-center hover-pointer">
+                                            <a href="{%url 'others-profile' user.id%}">
+                                            <img class="img-xs rounded-circle" src="{{user.users.profile_pic.url}}" alt="">
+                                            </a>
+                                            <div class="ml-2">
+                                                <p>{{user}}</p>
+                                                <p class="tx-11 text-muted"></p>
+                                            </div>
                                         </div>
+                                        <button class="btn btn-icon btn-secondary">
+                                            <a class="text-white" href="{%url 'unfollow' user.id%}">Unfollow</a>
+                                        </button>
                                     </div>
-                                    <button class="btn btn-icon btn-secondary">
-
-                                        <a class="text-white" href="{%url 'unfollow' user.id%}">Unfollow</a>
-                                    </button>
-                                </div>
-                            {%endfor%}
-
+                                {%endfor%}
+                            {%endif%}
                         </div>
                     </div>
                 </div>
