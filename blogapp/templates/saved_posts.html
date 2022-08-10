@@ -91,11 +91,9 @@
                                                 <i class="fa-solid fa-bookmark fa-lg"></i>
                                               </a>
                                         </p>
-
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -264,6 +262,13 @@
                     <!--             End of blog post displaying loop-->
                     {%endfor%}
                 </div>
+                {%if request.user.users.saved_post_count == 0%}
+                <div class="card card-body">
+                    <div class="card-body">
+                        <p class="mb-3 tx-14 text-center text-muted">You have no saved posts</p>
+                    </div>
+                </div>
+                {%endif%}
             </div>
         </div>
         <!-- middle wrapper end -->

@@ -62,7 +62,7 @@ class LoginView(FormView):
 class IndexView(CreateView):
     template_name="home.html"
     form_class=BlogForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-myprofile")
     template_name="home.html"
 
     def form_valid(self, form):
@@ -99,7 +99,7 @@ class CreateUserProfileView(CreateView):
     model=UserProfile
     template_name = "add-profile.html"
     form_class=UserProfileForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-myprofile")
 
     def form_valid(self, form):
         form.instance.user=self.request.user
@@ -139,7 +139,7 @@ class UpdateProfileView(UpdateView):
     model=UserProfile
     form_class=UserProfileForm
     template_name = "profile-update.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-myprofile")
     pk_url_kwarg = "user_id"
 
     def form_valid(self, form):
@@ -193,7 +193,7 @@ class ProfilePicUpdateView(UpdateView):
     model=UserProfile
     form_class=ProfilePicUpdateForm
     template_name = "profile-pic-update.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-myprofile")
     pk_url_kwarg = "user_id"
 
     def form_valid(self, form):
@@ -215,23 +215,23 @@ def delete_post(request,*args,**kwargs):
     if blog.author==request.user:
         blog.delete()
         messages.error(request,"Post has been deleted")
-        return redirect("home")
+        return redirect("view-myprofile")
     else:
         messages.error(request,"Cannot delete post !")
-        return redirect("home")
+        return redirect("view-myprofile")
 
 @signin_required
 def follow(request,*args,**kwargs):
     friend_id=kwargs.get("user_id")
     if friend_id == request.user.id:
         messages.error(request,"You can only follow other users")
-        return redirect("home")
+        return redirect("view-myprofile")
     else:
         friend_profile=User.objects.get(id=friend_id)
         request.user.users.following.add(friend_profile)
         friend_profile.save()
         messages.success(request,"You have started following "+friend_profile.username)
-        return redirect("home")
+        return redirect("view-myprofile")
 
 @signin_required
 def unfollow(request,*args,**kwargs):
@@ -239,15 +239,15 @@ def unfollow(request,*args,**kwargs):
     friend_profile=User.objects.get(id=friend_id)
     request.user.users.following.remove(friend_profile)
     friend_profile.save()
-    messages.success(request,"You have unfollowed "+friend_profile.username)
-    return redirect("home")
+    messages.error(request,"You have unfollowed "+friend_profile.username)
+    return redirect("view-myprofile")
 
 @method_decorator(signin_required,name="dispatch")
 class UpdateBlogView(UpdateView):
     model=Blogs
     form_class=BlogForm
     template_name="edit-post.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-myprofile")
     pk_url_kwarg ="post_id"
 
     def form_valid(self, form):
@@ -320,7 +320,7 @@ class CoverPicUpdateView(UpdateView):
     model=UserProfile
     form_class=CoverPicUpdateForm
     template_name = "cover-pic-update.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-my_profile")
     pk_url_kwarg = "user_id"
 
     def form_valid(self, form):
@@ -335,7 +335,7 @@ class CoverPicUpdateView(UpdateView):
 class ViewMyProfileView(CreateView):
     template_name="my-profile.html"
     form_class=BlogForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("view-myprofile")
 
 
     def form_valid(self, form):
@@ -371,7 +371,7 @@ class ViewOthersProfile(TemplateView):
         context["blogs"]=blogs.order_by("-posted_date")
         return context
 
-
+@signin_required
 def save_post(request,*args,**kwargs):
     post_id = kwargs.get("post_id")
     post = Blogs.objects.get(id=post_id)
@@ -379,19 +379,20 @@ def save_post(request,*args,**kwargs):
     userprofile.users.saved_posts.add(post)
     userprofile.save()
     messages.success(request,"post saved")
-    return render(request, "saved_posts.html")
+    return redirect("view-saved_posts")
 
+@signin_required
 def unsave_post(request,*args,**kwargs):
     post_id = kwargs.get("post_id")
     post = Blogs.objects.get(id=post_id)
     userprofile = User.objects.get(id=request.user.id)
     userprofile.users.saved_posts.remove(post)
     messages.success(request,"post removed from saved list")
-    return render(request, "saved_posts.html")
+    return redirect("view-saved_posts")
 
+@method_decorator(signin_required,name="dispatch")
 class ViewSavedPosts(TemplateView):
     template_name = "saved_posts.html"
-
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
