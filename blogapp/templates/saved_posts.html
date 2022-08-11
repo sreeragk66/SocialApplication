@@ -317,14 +317,8 @@
                                         </div>
                                     </div>
                                     <a class="text-white" href="{%url 'follow' user.id%}">
-                                    <button class="btn btn-icon btn-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
-                                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                                        </svg>&nbsp;Follow
-                                    </button>
+                                        <button class="btn btn-icon btn-primary btn-sm"><i class="fa-solid fa-user-plus mr-1"></i>Follow
+                                        </button>
                                     </a>
                                 </div>
                                 {%endfor%}
@@ -353,10 +347,10 @@
                                             <p class="tx-11 text-muted"></p>
                                         </div>
                                     </div>
-                                    <button class="btn btn-icon btn-secondary">
-
-                                        <a class="text-white" href="{%url 'unfollow' user.id%}">Unfollow</a>
-                                    </button>
+                                    <a class="text-white" href="{%url 'unfollow' user.id%}">
+                                        <button class="btn btn-icon btn-secondary btn-sm"><i class="fa-solid fa-user-minus mr-1"></i>Unfollow
+                                        </button>
+                                    </a>
                                 </div>
                             {%endfor%}
 
