@@ -257,13 +257,13 @@
                                 <p>
                                     <!--code for like ,dislike and displaying like count-->
                                     {%if request.user in blog.Liked_by.all%}
-                                    <p>
+                                    <p class="ml-5 mr-5">
                                       <a href="{%url 'dislike' blog.id%}" class="align-items-center  mr-1"><i class="fa-solid fa-thumbs-up fa-lg"></i><span> {{blog.get_like_count}}</span></a>
                                       <a class="align-items-center text-muted" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in blog.get_liked_users%}{{user}},{%endfor%}">likes</a>
                                     </p>
 
                                     {%else%}
-                                    <p>
+                                    <p class="ml-5 mr-5">
                                        <a href="{%url 'add-like' blog.id%}" class="align-items-center text-muted mr-1"><i class="fa-regular fa-thumbs-up fa-lg"></i> <span>{{blog.get_like_count}}</span></a>
                                        <a class="align-items-center text-muted" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in blog.get_liked_users%}{{user}},{%endfor%}">likes</a>
 
@@ -271,10 +271,15 @@
                                     {%endif%}
                                 </p>
 
-                                <a class="d-flex align-items-center text-muted mr-4 ml-4" data-toggle="collapse" href="#collapseExample{{blog.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <a class="d-flex align-items-center text-muted " data-toggle="collapse" href="#collapseExample{{blog.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
 
-                                    <p class="d-none d-md-block ml-2"><i class="fa-regular fa-comments fa-lg"></i> {{blog.get_comment_count}} Comments</p>
+                                    <p class="d-none d-md-block ml-5 mr-5"><i class="fa-regular fa-comments fa-lg"></i> {{blog.get_comment_count}} Comments</p>
                                 </a>
+                                <p class="ml-5">
+                                    <a href="{{blog.image.url}}" download class="text-muted">
+                                        <i class="fa-solid fa-download fa-lg"></i>
+                                    </a>
+                                </p>
                             </div>
                         </div>
 
