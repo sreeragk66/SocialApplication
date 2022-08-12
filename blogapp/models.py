@@ -23,6 +23,8 @@ class UserProfile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="users")
     following=models.ManyToManyField(User,related_name="followings",blank=True)
     saved_posts=models.ManyToManyField('Blogs',blank='True')
+    joined_date=models.DateField(auto_now_add=True,null=True)
+
     @property
     def fetch_followings(self):
         return self.following.all()

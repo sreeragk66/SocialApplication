@@ -19,8 +19,10 @@
                                 </svg>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {%if request.user.users%}
                                 <a class="dropdown-item d-flex align-items-center" href="{%url 'view-myprofile'%}">
                                   <span class=""><i class="fa-solid fa-user mr-2"></i>My Profile</span></a>
+                                {%endif%}
                                 <a class="dropdown-item d-flex align-items-center" href="{%url 'view-saved_posts'%}">
                                     <span class=""><i class="fa-solid fa-bookmark mr-2"></i>Saved posts</span></a>
                             </div>
@@ -89,35 +91,12 @@
                                     <div class="ml-2">
                                         <p class="text-capitalize">{{request.user}}</p>
                                         <p class="tx-11 text-muted">Share what's on your mind
-                                              <a class="btn btn-light ml-4" data-toggle="collapse" href="#collapseblogform" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                              <a class="btn btn-light ml-4" data-toggle="modal" data-target="#add_post">
                                                 <i class="fa-solid fa-share-from-square fa-lg"></i>
                                               </a>
                                         </p>
-
                                     </div>
                                 </div>
-
-                            </div>
-
-                        </div>
-                        <div class="collapse" id="collapseblogform">
-                          <div class="card card-body">
-                              <div class="card-body">
-                                <p class="mb-3 tx-14">
-                                    <form method="post" enctype="multipart/form-data">
-                                        {%csrf_token%}
-                                        {{form.as_p}}
-                                        <input type="submit" value="Post" class="btn btn-block btn-primary">
-                                    </form>
-                                </p>
-
-                              </div>
-                          </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="d-flex post-actions">
-
                             </div>
                         </div>
                     </div>
@@ -219,7 +198,7 @@
                                         </div>
                                         <div class="we-comment">
                                             <div class="coment-head">
-                                                <h5><a href="time-line.html" title="">{{comment.user}}</a></h5>
+                                                <h5><a  title="">{{comment.user}}</a></h5>
 
 
         <!--                                        code to delete comment-->
@@ -339,7 +318,7 @@
                                         </div>
                                     </div>
                                     <a class="text-white" href="{%url 'follow' user.id%}">
-                                    <button class="btn btn-icon btn-primary btn-sm"><i class="fa-solid fa-user-plus mr-1"></i>
+                                    <button class="btn btn-icon btn-outline-primary btn-sm"><i class="fa-solid fa-user-plus mr-1"></i>
                                     Follow
                                     </button>
                                     </a>
@@ -372,7 +351,7 @@
                                             </div>
                                         </div>
                                         <a class="text-white" href="{%url 'unfollow' user.id%}">
-                                            <button class="btn btn-icon btn-secondary btn-sm"><i class="fa-solid fa-user-minus mr-1"></i>
+                                            <button class="btn btn-icon btn-outline-primary btn-sm"><i class="fa-solid fa-user-minus mr-1"></i>
                                                 Unfollow
                                             </button>
                                         </a>
@@ -388,12 +367,28 @@
     </div>
 </div>
 </div>
-
-<style type="text/css">
-
-
-</style>
-
+<!--modal for add post-->
+<div class="modal fade" id="add_post" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">New Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <p class="mb-3 tx-14">
+            <form method="post" enctype="multipart/form-data">
+              {%csrf_token%}
+              {{form.as_p}}
+              <input type="submit" value="Post" class="btn btn-block btn-primary">
+            </form>
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
 
 </script>

@@ -21,8 +21,10 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item d-flex align-items-center" href="{%url 'home'%}">
                                   <span class=""><i class="fa-solid fa-house-user fa-lg mr-2"></i>Home</span></a>
+                                {%if request.user.users%}
                                 <a class="dropdown-item d-flex align-items-center" href="{%url 'view-myprofile'%}">
                                    <span class=""><i class="fa-solid fa-user fa-lg mr-2"></i>My Profile</span></a>
+                                {%endif%}
                             </div>
                         </div>
                     </div>
@@ -194,7 +196,7 @@
                                         </div>
                                         <div class="we-comment">
                                             <div class="coment-head">
-                                                <h5><a href="time-line.html" title="">{{comment.user}}</a></h5>
+                                                <h5><a  title="">{{comment.user}}</a></h5>
 
 
         <!--                                        code to delete comment-->
@@ -322,7 +324,7 @@
                                         </div>
                                     </div>
                                     <a class="text-white" href="{%url 'follow' user.id%}">
-                                        <button class="btn btn-icon btn-primary btn-sm"><i class="fa-solid fa-user-plus mr-1"></i>Follow
+                                        <button class="btn btn-icon btn-outline-primary btn-sm"><i class="fa-solid fa-user-plus mr-1"></i>Follow
                                         </button>
                                     </a>
                                 </div>
@@ -353,7 +355,7 @@
                                         </div>
                                     </div>
                                     <a class="text-white" href="{%url 'unfollow' user.id%}">
-                                        <button class="btn btn-icon btn-secondary btn-sm"><i class="fa-solid fa-user-minus mr-1"></i>Unfollow
+                                        <button class="btn btn-icon btn-outline-primary btn-sm"><i class="fa-solid fa-user-minus mr-1"></i>Unfollow
                                         </button>
                                     </a>
                                 </div>

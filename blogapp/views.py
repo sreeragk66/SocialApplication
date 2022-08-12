@@ -319,7 +319,7 @@ def unlike_comment(request,*args,**kwargs):
 class CoverPicUpdateView(UpdateView):
     model=UserProfile
     form_class=CoverPicUpdateForm
-    template_name = "cover-pic-update.html"
+    template_name = "my-profile.html"
     success_url = reverse_lazy("view-my_profile")
     pk_url_kwarg = "user_id"
 
