@@ -13,7 +13,6 @@ urlpatterns=[
     path("post/like/add/<int:post_id>",views.add_like,name="add-like"),
     path("post/like/remove/<int:post_id>",views.dislike,name="dislike"),
     path("post/comment/remove/<int:post_id>/<int:comment_id>",views.delete_comment,name="delete-comment"),
-    path("users/profile/profile/pic_update/<int:user_id>",views.ProfilePicUpdateView.as_view(),name="pro-pic-update"),
     path("users/follow/<int:user_id>",views.follow,name="follow"),
     path("users/unfollow/<int:user_id>",views.unfollow,name="unfollow"),
     path("post/remove/<int:post_id>",views.delete_post,name="delete-post"),
@@ -27,7 +26,8 @@ urlpatterns=[
     path("post/save/<int:post_id>",views.save_post,name="save-post"),
     path("post/unsave/<int:post_id>",views.unsave_post,name="unsave-post"),
     path("users/profile/view-saved_posts",views.ViewSavedPosts.as_view(),name="view-saved_posts"),
-    path("users/profile/profile/coverpic_update/<int:user_id>",views.UpdateCoverPic,name="coverpic-update")
+    path("users/profile/profile/coverpic_update/<int:user_id>",views.UpdateCoverPic,name="coverpic-update"),
+    path("users/profile/profile/pic_update",views.UpdateProfilePic,name="pro-pic-update"),
 
 
 

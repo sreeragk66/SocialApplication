@@ -188,20 +188,6 @@ def dislike(request,*args,**kwargs):
     blog.Liked_by.remove(request.user)
     return redirect("home")
 
-@method_decorator(signin_required,name="dispatch")
-class ProfilePicUpdateView(UpdateView):
-    model=UserProfile
-    form_class=ProfilePicUpdateForm
-    template_name = "profile-pic-update.html"
-    success_url = reverse_lazy("view-myprofile")
-    pk_url_kwarg = "user_id"
-
-    def form_valid(self, form):
-        messages.success(self.request,"Profile Picture has been updated")
-        self.object=form.save()
-        return super().form_valid(form)
-
-
 @signin_required
 def signout(request,*args,**kwargs):
     logout(request)
@@ -331,12 +317,14 @@ class ViewMyProfileView(CreateView):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
         coverform=CoverPicUpdateForm()
+        profilepicform=ProfilePicUpdateForm()
         saved_posts = self.request.user.users.saved_posts.all()
         #exclude posts by loggedin user
         blogs=Blogs.objects.filter(author=self.request.user)
         context["blogs"]=blogs.order_by("-posted_date")
         context["comment_form"]=comment_form
         context["coverform"]=coverform
+        context["profilepicform"]=profilepicform
         context["saved_posts"]=saved_posts.order_by("-posted_date")
         return context
 
@@ -363,7 +351,7 @@ def save_post(request,*args,**kwargs):
     userprofile = User.objects.get(id=request.user.id)
     userprofile.users.saved_posts.add(post)
     userprofile.save()
-    messages.success(request,"post saved")
+    messages.success(request,"Post Saved")
     return redirect("view-saved_posts")
 
 @signin_required
@@ -372,7 +360,7 @@ def unsave_post(request,*args,**kwargs):
     post = Blogs.objects.get(id=post_id)
     userprofile = User.objects.get(id=request.user.id)
     userprofile.users.saved_posts.remove(post)
-    messages.success(request,"post removed from saved list")
+    messages.success(request,"Post removed from saved list")
     return redirect("view-saved_posts")
 
 @method_decorator(signin_required,name="dispatch")
@@ -399,6 +387,15 @@ def UpdateCoverPic(request,*args,**kwargs):
     user_profile.save()
     messages.success(request,"Cover pic has been updated")
     return redirect('view-myprofile')
+
+@signin_required
+def UpdateProfilePic(request,*args,**kwargs):
+    user_profile=UserProfile.objects.get(user=request.user)
+    user_profile.profile_pic=request.FILES.get('profile_pic')
+    user_profile.save()
+    messages.success(request,"Profile Picture has been updated")
+    return redirect('view-myprofile')
+
 
 
 

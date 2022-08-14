@@ -22,7 +22,7 @@
                     <div class="cover-body d-flex justify-content-between align-items-center">
                         <div>
                             {%if request.user.users.profile_pic%}
-                            <a href="{%url 'pro-pic-update' request.user.users.id%}">
+                            <a data-toggle="modal" data-target="#profilepicupdate">
                                 <img class="profile-pic " src="{{request.user.users.profile_pic.url}}" alt="profile">
                             </a>
                             {%endif%}
@@ -555,6 +555,27 @@
           <form action="{%url 'coverpic-update' request.user.id%}" method="post" enctype="multipart/form-data">
             {%csrf_token%}
               {{coverform.as_p}}
+              <button class="form-control btn btn-primary" type="submit">Update</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--profile pic update modal-->
+<div class="modal fade" id="profilepicupdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Profile Picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{%url 'pro-pic-update'%}" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                {{profilepicform.as_p}}
               <button class="form-control btn btn-primary" type="submit">Update</button>
           </form>
       </div>
