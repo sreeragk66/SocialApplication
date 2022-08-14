@@ -314,23 +314,6 @@ def unlike_comment(request,*args,**kwargs):
     comment.liked_by.remove(request.user)
     return redirect("home")
 
-
-@method_decorator(signin_required,name="dispatch")
-class CoverPicUpdateView(UpdateView):
-    model=UserProfile
-    form_class=CoverPicUpdateForm
-    template_name = "my-profile.html"
-    success_url = reverse_lazy("view-my_profile")
-    pk_url_kwarg = "user_id"
-
-    def form_valid(self, form):
-        messages.success(self.request,"Cover Picture has been updated")
-        self.object=form.save()
-        return super().form_valid(form)
-
-
-
-
 @method_decorator(signin_required,name="dispatch")
 class ViewMyProfileView(CreateView):
     template_name="my-profile.html"
@@ -347,11 +330,13 @@ class ViewMyProfileView(CreateView):
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         comment_form=CommentForm()
+        coverform=CoverPicUpdateForm()
         saved_posts = self.request.user.users.saved_posts.all()
         #exclude posts by loggedin user
         blogs=Blogs.objects.filter(author=self.request.user)
         context["blogs"]=blogs.order_by("-posted_date")
         context["comment_form"]=comment_form
+        context["coverform"]=coverform
         context["saved_posts"]=saved_posts.order_by("-posted_date")
         return context
 
@@ -407,7 +392,13 @@ class ViewSavedPosts(TemplateView):
             context["comment_form"] = comment_form
             return context
 
-
+@signin_required
+def UpdateCoverPic(request,*args,**kwargs):
+    user_profile=UserProfile.objects.get(user=request.user)
+    user_profile.cover_pic=request.FILES.get('cover_pic')
+    user_profile.save()
+    messages.success(request,"Cover pic has been updated")
+    return redirect('view-myprofile')
 
 
 

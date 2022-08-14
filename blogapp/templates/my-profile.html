@@ -30,7 +30,7 @@
                         </div>
                         {%if request.user.users%}
                             <div class="d-none d-md-block ">
-                                    <a class="text-dark btn btn-light" href="{%url 'coverpic-update' request.user.users.id%}">
+                                    <a class="text-dark btn btn-light" data-toggle="modal" data-target="#coverpicupdate">
                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                     </a>
                             </div>
@@ -535,6 +535,28 @@
               <input type="submit" value="Post" class="btn btn-block btn-primary">
             </form>
           </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--coverpic update modal-->
+
+<div class="modal fade" id="coverpicupdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change cover picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{%url 'coverpic-update' request.user.id%}" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+              {{coverform.as_p}}
+              <button class="form-control btn btn-primary" type="submit">Update</button>
+          </form>
       </div>
     </div>
   </div>

@@ -22,12 +22,12 @@ urlpatterns=[
     path("accounts/remove/<int:user_id>", views.DeleteProfileView.as_view(), name="delete-profile"),
     path("post/comment/like/<int:cmt_id>",views.like_comment,name="like-comment"),
     path("post/comment/unlike/<int:cmt_id>",views.unlike_comment,name="unlike-comment"),
-    path("users/profile/profile/coverpic_update/<int:user_id>",views.CoverPicUpdateView.as_view(),name="coverpic-update"),
     path("users/profile/view",views.ViewMyProfileView.as_view(),name="view-myprofile"),
     path("users/profile/others-profile/<int:user_id>",views.ViewOthersProfile.as_view(),name="others-profile"),
     path("post/save/<int:post_id>",views.save_post,name="save-post"),
     path("post/unsave/<int:post_id>",views.unsave_post,name="unsave-post"),
-    path("users/profile/view-saved_posts",views.ViewSavedPosts.as_view(),name="view-saved_posts")
+    path("users/profile/view-saved_posts",views.ViewSavedPosts.as_view(),name="view-saved_posts"),
+    path("users/profile/profile/coverpic_update/<int:user_id>",views.UpdateCoverPic,name="coverpic-update")
 
 
 
