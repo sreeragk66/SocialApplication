@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            {%if user_profiles%}
+             <div class="card card-body mt-3 mb-3">
+                        <p class="mb-5tx-14 text-center text-muted">Results matching your query</p>
+              </div>
+            {%for profile in user_profiles%}
+            <div class="card rounded">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img class="img-xs rounded-circle" src="{{profile.users.profile_pic.url}}" alt="">
+                                    <div class="ml-2">
+                                        <p class="text-capitalize">
+                                            <span class="mr-5">{{profile.username}}</span>
+                                            <a href="{%url 'others-profile' profile.id%}">
+                                                <button class="btn btn-outline-primary btn-sm ml-5">View Profile</button>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {%endfor%}
+            {%else%}
+              <div class="card card-body mt-3">
+                    <div class="card-body">
+                        <p class="mb-3 tx-14 text-center text-muted">No results matching your query</p>
+                    </div>
+              </div>
+            {%endif%}
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+{%endblock%}

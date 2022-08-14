@@ -52,7 +52,12 @@
         </li>
         </ul>
 
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
+              <form class="form-inline my-2 my-lg-0 mr-5" method="post" action="{%url 'user-search'%}">
+                  {%csrf_token%}
+                  <input class="form-control mr-sm-2" type="text" placeholder="Search Users" aria-label="Search" name="query" required>
+                  <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+              </form>
           {%if request.user.users.profile_pic%}
           <li class="nav-item">
               <div class="d-flex flex-column align-items-right text-center" >
@@ -71,7 +76,6 @@
           </ul>
         </li>
       </ul>
-
     </div>
   </div>
 </nav>
