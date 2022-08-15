@@ -87,9 +87,4 @@ class CoverPicUpdateForm(ModelForm):
             "cover_pic":forms.FileInput(attrs={"class":"form-control"})
     }
 
-class SearchUserForm(forms.Form):
-    query=forms.CharField(widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Search Users"}))
-
-class SearchPostsForm(forms.Form):
-    query = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Search Posts"}))
 

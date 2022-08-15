@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View,CreateView,FormView,TemplateView,UpdateView,DeleteView
 from django.contrib.auth.models import User
 from blogapp.models import UserProfile,Blogs,Comments
-from blogapp.forms import UserRegistrationForm,LoginForm,UserProfileForm,PasswordResetForm,BlogForm,CommentForm,ProfilePicUpdateForm,DeleteProfileForm,CoverPicUpdateForm,SearchUserForm
+from blogapp.forms import UserRegistrationForm,LoginForm,UserProfileForm,PasswordResetForm,BlogForm,CommentForm,ProfilePicUpdateForm,DeleteProfileForm,CoverPicUpdateForm
 from django.contrib.auth import login,logout,authenticate
 from django.utils.decorators import method_decorator
 
@@ -52,7 +52,7 @@ class LoginView(FormView):
 
             if user:
                 login(request,user)
-                messages.success(request,f"Welcome {request.user}")
+                messages.success(request,f"welcome {request.user}")
                 return redirect("home")
             else:
                 messages.error(request, "Incorrect username or password")
@@ -418,7 +418,17 @@ def SearchPosts(request):
         return render(request,"search-posts.html")
 
 
+def SearchSavedPosts(request):
+    if request.method=="POST":
+        query=request.POST.get("query")
+        blogs=request.user.users.saved_posts.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        blogs.order_by("-posted_date")
+        return render(request, "search-posts.html", {"blogs": blogs})
 
+    else:
+        return render(request, "search-posts.html")
 
 
 

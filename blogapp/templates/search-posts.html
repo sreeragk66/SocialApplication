@@ -5,6 +5,7 @@
         <div class="col-3"></div>
         <div class="col-6">
             <!--                section to display blogs,comments,likes-->
+                {%if blogs%}
                 <div class="col-md-12">
                     {%for blog in blogs%}
                     {%if blog.image%}
@@ -173,7 +174,13 @@
                     <!--             End of blog post displaying loop-->
                     {%endfor%}
                 </div>
-
+              {%else%}
+              <div class="card card-body mt-3">
+                    <div class="card-body">
+                        <p class="mb-3 tx-14 text-center text-muted">No results matching your query</p>
+                    </div>
+              </div>
+            {%endif%}
         </div>
         <div class="col-3"></div>
     </div>

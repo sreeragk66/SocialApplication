@@ -29,8 +29,9 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <form action="" method="post">
-                        <p><input type="textbox" class="form-control" placeholder="Search Posts"></p>
+                        <form action="{%url 'search-savedposts'%}" method="post">
+                            {%csrf_token%}
+                        <p><input type="textbox" class="form-control" placeholder="Search Posts" name="query"></p>
                         </form>
                     </div>
                 </div>
