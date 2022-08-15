@@ -23,41 +23,23 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
 
-        <i class="fa-solid fa-circle-nodes fa-2x mr-2 ml-2" style="color:#b92b27"></i>Connect</a>
+        <i class="fa-solid fa-circle-nodes fa-2x mr-2 ml-2" style="color:white"></i>Connect</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
         <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{%url 'home'%}"><i class="fa-solid fa-house mr-2 ml-2"></i>Home</a>
         </li>
-          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-gear ml-2 mr-2"></i>Manage Profile
-          </a>
-          <ul class="dropdown-menu">
-              {%if request.user.users%}
-                <li><a class="dropdown-item" href="{%url 'view-myprofile'%}"><i class="fa-solid fa-eye mr-2"></i>View My Profile</a></li>
-
-                <li><a class="dropdown-item" href="{%url 'profile-update' request.user.users.id%}"><i class="fa-solid fa-user-pen mr-2"></i>Edit Profile</a></li>
-              {%else%}
-                <li><a class="dropdown-item" href="{%url 'add-profile'%}"><i class="fa-solid fa-user-plus mr-2"></i>Add User Profile</a></li>
-              {%endif%}
-            <li><a class="dropdown-item" href="{%url 'password-reset'%}"><i class="fa-solid fa-key mr-2"></i>Change Password</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{%url 'delete-profile' request.user.id%}"><i class="fa-solid fa-user-xmark mr-2"></i>Delete Account</a></li>
-          </ul>
-        </li>
-        </ul>
-
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
-              <form class="form-inline my-2 my-lg-0 mr-5" method="post" action="{%url 'user-search'%}">
+            <li class="nav-item ml-2">
+                <form class="form-inline my-2 my-lg-0 mr-5" method="post" action="{%url 'user-search'%}" id="usersearch">
                   {%csrf_token%}
                   <input class="form-control mr-sm-2" type="text" placeholder="Search Users" aria-label="Search" name="query" required>
-                  <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
               </form>
+            </li>
+        </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
           {%if request.user.users.profile_pic%}
           <li class="nav-item">
               <div class="d-flex flex-column align-items-right text-center" >
@@ -65,15 +47,22 @@
             </div>
           </li>
           {%endif%}
-         <li class="nav-item dropdown"  style="width:100px;">
+         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-capitalize active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <strong>{{request.user}}</strong>
           </a>
-
-          <ul class="dropdown-menu" style="min-width:3rem;">
-
-                <li><a class="dropdown-item" href="{%url 'signout'%}"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Logout</a></li>
-          </ul>
+             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                 {%if request.user.users%}
+                 <a class="dropdown-item" href="{%url 'view-myprofile'%}"><i class="fa-solid fa-eye mr-2"></i>View My Profile</a>
+                 <a class="dropdown-item" href="{%url 'profile-update' request.user.users.id%}"><i class="fa-solid fa-user-pen mr-2"></i>Edit Profile</a>
+                 {%else%}
+                 <a class="dropdown-item" href="{%url 'add-profile'%}"><i class="fa-solid fa-user-plus mr-2"></i>Add User Profile</a>
+                 {%endif%}
+                 <a class="dropdown-item" href="{%url 'password-reset'%}"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
+                 <a class="dropdown-item" href="{%url 'delete-profile' request.user.id%}"><i class="fa-solid fa-user-xmark mr-2"></i>Delete Account</a>
+                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="{%url 'signout'%}"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Logout</a>
+             </div>
         </li>
       </ul>
     </div>

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -396,7 +397,6 @@ def UpdateProfilePic(request,*args,**kwargs):
     messages.success(request,"Profile Picture has been updated")
     return redirect('view-myprofile')
 
-
 def UserSearch(request):
     if request.method=='POST':
         query=request.POST.get("query")
@@ -404,6 +404,19 @@ def UserSearch(request):
         return render(request,"user-search.html",{"user_profiles":user_profiles})
     else:
         return render(request,"user-search.html")
+
+def SearchPosts(request):
+    if request.method=="POST":
+        query=request.POST.get("query")
+        blogs=Blogs.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        blogs.order_by("-posted_date")
+        return render(request,"search-posts.html",{"blogs":blogs})
+
+    else:
+        return render(request,"search-posts.html")
+
 
 
 

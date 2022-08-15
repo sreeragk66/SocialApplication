@@ -28,7 +28,8 @@ urlpatterns=[
     path("users/profile/view-saved_posts",views.ViewSavedPosts.as_view(),name="view-saved_posts"),
     path("users/profile/profile/coverpic_update/<int:user_id>",views.UpdateCoverPic,name="coverpic-update"),
     path("users/profile/profile/pic_update",views.UpdateProfilePic,name="pro-pic-update"),
-    path("users/search",views.UserSearch,name="user-search")
+    path("users/search",views.UserSearch,name="user-search"),
+    path("post/search",views.SearchPosts,name="posts-search")
 
 
 
