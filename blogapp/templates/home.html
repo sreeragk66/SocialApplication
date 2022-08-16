@@ -10,6 +10,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <h6 class="card-title mb-0">Search all posts</h6>
+                        <p></p>
                         <div class="dropdown">
                             <button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg text-muted pb-3px">
@@ -31,7 +32,7 @@
                     <div class="mt-3">
                         <form action="{%url 'search-allposts'%}" method="post">
                             {%csrf_token%}
-                            <p><input type="textbox" class="form-control" placeholder="Search Posts" name="query"></p>
+                            <p><input type="textbox" class="form-control" placeholder="Search Posts" name="query" id="searchposts"></p>
                         </form>
                     </div>
                 </div>
@@ -218,7 +219,7 @@
                                             <p>{{comment.comment}}</p>
                                             {%if request.user in comment.liked_by.all%}
                                              <p>
-                                                 <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
+                                                 <span class="mr-5 text-muted">{{comment.commented_date|timesince}}&nbsp;ago</span>
                                                  <a class="text-muted" href="">{{comment.get_comment_like_count}}</span></a>
                                                  <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
                                                  <a class="ml-5" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
@@ -226,7 +227,7 @@
 
                                             {%else%}
                                             <p>
-                                                <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
+                                                <span class="mr-5 text-muted">{{comment.commented_date|timesince}}&nbsp;ago</span>
                                                <a class="text-muted" href="">{{comment.get_comment_like_count}}</a>
                                                 <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
                                                 <a class="ml-5" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>
@@ -378,7 +379,16 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-
-</script>
+<script>
+  $( function() {
+    var availableTags = [
+      {%for blog in blogs%}
+      "{{blog.title}}","{{blog.description}}",
+      {%endfor%}
+    ];
+    $( "#searchposts" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
 {%endblock%}

@@ -267,7 +267,7 @@
 
                                             {%if request.user in comment.liked_by.all%}
                                             <p>
-                                                 <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
+                                                 <span class="mr-5 text-muted">{{comment.commented_date|timesince}}&nbsp;ago</span>
                                                  <a class="text-muted" href="">{{comment.get_comment_like_count}}</span></a>
                                                  <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
                                                  <a class="ml-5" href="{%url 'unlike-comment' comment.id%}"><i class="fa-solid fa-heart fa-bg" style="color:red"></i></a>
@@ -275,7 +275,7 @@
 
                                             {%else%}
                                             <p>
-                                                <span class="mr-5">{{comment.commented_date|timesince}}&nbsp;ago</span>
+                                                <span class="mr-5 text-muted">{{comment.commented_date|timesince}}&nbsp;ago</span>
                                                <a class="text-muted" href="">{{comment.get_comment_like_count}}</a>
                                                 <a class="align-items-center text-muted mr-5" data-container="body" data-toggle="popover" data-placement="top" data-content="Liked by {%for user in comment.get_liked_users%}{{user}},{%endfor%}">likes</a>
                                                 <a class="ml-5" href="{%url 'like-comment' comment.id%}"><i class="fa-regular fa-heart fa-bg" style="color:grey;"></i></a>

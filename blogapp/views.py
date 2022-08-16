@@ -408,10 +408,11 @@ def UserSearch(request):
 def SearchPosts(request):
     if request.method=="POST":
         query=request.POST.get("query")
-        blogs=Blogs.objects.filter(
+        all_blogs=Blogs.objects.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
         )
-        blogs.order_by("-posted_date")
+        all_blogs.order_by("-posted_date")
+        blogs=[blog for blog in all_blogs if blog.author in request.user.users.fetch_followings]
         return render(request,"search-posts.html",{"blogs":blogs})
 
     else:
@@ -429,6 +430,4 @@ def SearchSavedPosts(request):
 
     else:
         return render(request, "search-posts.html")
-
-
 
